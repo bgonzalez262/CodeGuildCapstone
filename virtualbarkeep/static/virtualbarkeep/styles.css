@@ -38,6 +38,9 @@ body {
 /*end navbar---*/
 
 /*landing/header---*/
+.logoimg {
+    margin-top: 30px;
+}
 .header-container {
     padding-top: 20px;
     display: flex;
@@ -45,7 +48,7 @@ body {
     color: black;
     height: 100vh;
     width: 100%;
-    background-image: url("https://live.staticflickr.com/1474/25192383151_9036fa8988_b.jpg");
+    /*background-image: url("https://live.staticflickr.com/1474/25192383151_9036fa8988_b.jpg");*/
     background-size: cover;
     justify-content: center;
 }
@@ -74,12 +77,26 @@ body {
 /*end landing/header---*/
 
 /*search divs---*/
+.main-header {
+    background-color: grey;
+    text-align: center;
+    height: 100%;
+    margin-bottom: 0px;
+    background-image: url("https://www.wallpaperflare.com/static/670/179/820/envelope-minimal-blue-hd-wallpaper.jpg");
+    background-size: cover;
+}
 .search-container {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
     width: 100%;
-    background-color: red;
+    /*background-color: grey;*/
+    margin-top: 0px;
+}
+.card {
+    margin: 30px;
 }
 
 
