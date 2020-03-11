@@ -1,0 +1,37 @@
+{% load static %}
+<div class="main-header">
+    <div class="btn-grp">
+        <div class="btn-group" id="variations">
+            <button v-for="drink in drinkResults" type="button" class="btn btn-secondary drink-btn"
+                    v-on:click="advancedFind(drink.name)">[[drink.name]]
+            </button>
+        </div>
+    </div>
+    <div class="search-container" id="searchid">
+        <div class="card-contain">
+            <div id="cardId" class="card" style="width: 18rem;" v-for='drink in drinkResults2'><img
+                    v-bind:src='drink.image' class="card-img-top" alt="...">
+                <!-- Creating an individual cards based off of the second axios pull. The second axios pull may not be necessary? the idea is to be able to click on the preopulated list of buttons that were created for the drinks and when clicked the div displays the card.-- -->
+                <div class="card-body">
+                    <h5 class="card-title">[[drink.name]]</h5>
+                    <a class="btn btn-primary">Instructions</a></div>
+                <a class="btn btn-primary" onclick="showCard(cardHide)">Click here </a>
+                <!--when the functions arent commented this unhides div-->
+                <div class="card-text" id="cardHide">
+                    <table>
+                        <tr>
+                            <th>Ingredient</th>
+                            <th>Measurement</th>
+                        </tr>
+                        <tr v-for='ingredient in drink.ingredients'>
+                            <td>[[ingredient.name]]</td>
+                            <td>[[ingredient.amount]]</td>
+                        </tr>
+                    </table>
+                    <p>[[drink.instructions]]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

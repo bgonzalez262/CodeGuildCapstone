@@ -4,6 +4,6 @@ from django.shortcuts import render
 def index(request):
     return render(request,'virtualbarkeep/index.html')
 
-def search_alc(request):
-    return render(request,'virtualbarkeep/searchdrink.html')
+def searchalc(request):
+    return render(request,'virtualbarkeep/search.html')
 

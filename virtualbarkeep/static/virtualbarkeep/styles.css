@@ -54,7 +54,6 @@ body {
 }
 .jumbotron {
     background-color: rgba(252, 247, 247,.4);
-
 }
 .search-header {
     display: flex;
@@ -92,7 +91,6 @@ body {
     align-items: center;
     height: 100vh;
     width: 100%;
-    /*background-color: grey;*/
     margin-top: 0px;
 }
 .card {
@@ -102,6 +100,70 @@ body {
 
 
 
+
 /*styles/curves*/
+table {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+table tr th {
+	width: 50px;
+	padding: 20px;
+}
+td {
+	width: 50px;
+	padding: 20px;
+}
+/* main container-- */
+.container {
+    height: 100%;
+    min-width: 600px !important;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+/* header with jumbo tron-- */
+.jumbotron {
+	width: 600px !important;
+	text-align: center;
+}
+.drink-btn {
+	margin: 5px;
+}
+.btn-grp {
+	display: flex;
+	flex-direction: row;
+	/*flex-wrap: wrap !important;*/
+	width: 600px;
+	margin-top: 40px;
+	/*overflow: scroll;*/
+}
+/* card holders-- */
+.card-contain {
+	width: 800px;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	padding: 0px 10px;
+}
+.card-text {
+	display: none;
+	margin-top: 10px;
+}
+
+.card1 {
+	display: block;
+
+}
+.dpdn {
+	margin-top: 20px;
+}
+
 
 
