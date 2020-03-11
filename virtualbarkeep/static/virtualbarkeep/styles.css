@@ -1,0 +1,90 @@
+html {
+    scroll-behavior: smooth;
+}
+body {
+    margin: 0px;
+    padding: 0px;
+    margin-bottom: 0px;
+    font-family: 'Quicksand', sans-serif;
+
+}
+/*navbar---*/
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.navbar li {
+    display: inline;
+}
+.navbar a {
+    list-style: none;
+    text-decoration: none;
+    font-size: 20px;
+}
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.navbar li a {
+  display: inline-block;
+  color: black;
+  padding: 8px 8px;
+}
+.navbar li a:hover {
+  color: red;
+}
+/*end navbar---*/
+
+/*landing/header---*/
+.header-container {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    color: black;
+    height: 100vh;
+    width: 100%;
+    background-image: url("https://live.staticflickr.com/1474/25192383151_9036fa8988_b.jpg");
+    background-size: cover;
+    justify-content: center;
+}
+.jumbotron {
+    background-color: rgba(252, 247, 247,.4);
+
+}
+.search-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.search-selector{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    height: 400px;
+    width: 400px;
+    color: black;
+}
+/*end landing/header---*/
+
+/*search divs---*/
+.search-container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100%;
+    background-color: red;
+}
+
+
+
+
+/*styles/curves*/
+
+
