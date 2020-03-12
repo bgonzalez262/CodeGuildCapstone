@@ -12,12 +12,14 @@ def searchalc(request):
     return render(request,'virtualbarkeep/search.html')
 
 def register(request):
-    # if request.method == 'GET':
-    return render(request, 'virtualbarkeep/reglog.html')
-    # username = request.POST['username']
-    # email = request.POST['email']
-    # password = request.POST['password']
-    # user = User.objects.create_user(username, email, password)
+    if request.method == 'GET':
+        return render(request, 'virtualbarkeep/reglog.html')
+    username = request.POST['username']
+    email = request.POST['email']
+    password = request.POST['password']
+    User.objects.create_user(username, email, password)
+
+    return HttpResponseRedirect(reverse('vbk:index'))
 
 def login_user(request):
     if request.method == 'GET':

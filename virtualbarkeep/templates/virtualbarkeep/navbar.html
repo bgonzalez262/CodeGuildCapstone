@@ -3,9 +3,11 @@
     <div><a class="navbar-brand" href="{% url 'vbk:index' %}">V | B</a></div>
         <div>
             <ul>
-                <li><a href="">Home</a></li>
+                <li><a href="{% url 'vbk:index' %}">Home</a></li>
                 <li><a href="">Random</a></li>
                 <li><a href="">Login</a></li>
+                <li><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Register</button></li>
             </ul>
         </div>
 </nav>
