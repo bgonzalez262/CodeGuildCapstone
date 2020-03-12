@@ -2,70 +2,30 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-'''
-Landing page or "index" page. Contains a nav bar, and a large 100vh with actions calls to select what you want to do. Possible more to be added.
-'''
+
 
 <div class="header-container">
-    <p>{{request.user}}</p>
+
     <div>
         <nav>
             {% include './navbar.html' %}
         </nav>
     </div>
     <div class="search-header">
-        <div class="logoimg">
-            <img src="{% static 'virtualbarkeep/images/logo.png' %}" height="300px" width="300px" alt="">
-        </div>
+<!--        <div class="logoimg">-->
+<!--            <img src="{% static 'virtualbarkeep/images/logo.png' %}" height="300px" width="300px" alt="">-->
+<!--        </div>-->
         <div class="jumbotron">
+            <img src="{% static 'virtualbarkeep/images/logo.png' %}" height="200px" width="200px" alt="">
             <h1 class="display-4">Hello,</h1>
             <p class="lead">Welcome to your very own, and personal Virtual Barkeep.. </p>
             <hr class="my-4">
             <p>Get rid of the "what do I want?" in your life and let your Barkeep give you some ideas.</p>
-            <a class="btn btn-primary btn-lg" href="{% url 'vbk:searchalc' %}" role="button">Search Alcohol</a>
-            <a class="btn btn-primary btn-lg" href="#searchid" role="button">Search Food</a>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                Register
-            </button>
+            <a class="btn btn-index btn-lg" href="{% url 'vbk:searchalc' %}" role="button">Drink Ideas</a>
+            <a class="btn btn-index btn-lg" href="#searchid" role="button">Food Ideas</a>
         </div>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{% url 'vbk:register' %}" method="POST">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="username">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" name="email"
-                                   aria-describedby="emailHelp">
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                                else.</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" name="password">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
 </div>
 {% endblock %}

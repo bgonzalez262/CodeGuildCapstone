@@ -21,6 +21,9 @@ def register(request):
 
     return HttpResponseRedirect(reverse('vbk:index'))
 
+def login_page(request):
+    return render(request,'virtualbarkeep/login.html')
+
 def login_user(request):
     if request.method == 'GET':
         return render(request, 'virtualbarkeep/login.html')
@@ -40,7 +43,7 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return HttpResponseRedirect(reverse('vbk:index') + '?message=loggedout')
+    return HttpResponseRedirect(reverse('vbk:index'))
 
 @login_required
 def profile(request):

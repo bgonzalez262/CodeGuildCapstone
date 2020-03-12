@@ -4,18 +4,15 @@
 
 
 {% include './navbar.html %}
+<div class="space"></div>
 <div id="app">
-    <div class="space"></div>
-    <div class="welcome"><h4>Welcome {{user}}</h4></div>
-<!--        <p>Welcome {{user}}</p>-->
     <div class="header-container">
-
         <div class="search-box">
             <div class="jumbotron jumbotron-fluid">
                 <h1 class="display-4">Drink Search</h1>
                 <p class="lead">Type the name of a drink to see results.</p>
                 <input type="text" v-model='drinkName' v-on:keyup.enter='startFind'>
-                <a href="#variations" class="search-btn" v-on:click="startFind">Search</a>
+                <a href="#flipcard" class="search-btn" v-on:click="startFind">Search</a>
                 <div class="dropdown dpdn">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Variations
@@ -30,78 +27,38 @@
             </div>
         </div>
     </div>
-    <div class="main-header">
-        <div class="btn-grp">
-
-            <div class="btn-group" id="variations">
-                <button v-for="drink in drinkResults" type="button" class="btn btn-secondary drink-btn"
-                        v-on:click="advancedFind(drink.name)">[[drink.name]]
-                </button>
-            </div>
+    <!--    cards-->
+    <div class="flip-card" v-for='drink in drinkResults2' id="flipcard">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <img v-bind:src='drink.image' alt="Avatar" style="width:200px;height:200px;">
         </div>
-        <div class="search-container" id="searchid">
-            <div class="card-contain">
-                <div id="cardId" class="card" style="width: 18rem;" v-for='drink in drinkResults2'>
-                    <img v-bind:src='drink.image' class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">[[drink.name]]</h5>
-                        <a class="btn btn-primary">Instructions</a></div>
-                    <a class="btn btn-primary" onclick="showCard(cardHide)">Click here </a>
-                    <!--when the functions arent commented this unhides div-->
-                    <div class="card-text" id="cardHide">
-                        <table>
-                            <tr>
-                                <th>Ingredient</th>
-                                <th>Measurement</th>
-                            </tr>
-                            <tr v-for='ingredient in drink.ingredients'>
-                                <td>[[ingredient.name]]</td>
-                                <td>[[ingredient.amount]]</td>
-                            </tr>
-                        </table>
-                        <p>[[drink.instructions]]</p>
-                    </div>
-                </div>
-            </div>
+        <div class="flip-card-back">
+          <h1>John Doe</h1>
+          <p>Architect & Engineer</p>
+          <p>We love that guy</p>
         </div>
-
-    </div>
-
+      </div>
 </div>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" id="username">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                   aria-describedby="emailHelp">
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                                else.</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
+
+
+    <div class="search-container">
+    <div class="custom-card" v-for='drink in drinkResults2'>
+        <div class="card-img"><img v-bind:src='drink.image' class="card-img-top" alt="..."></div>
+        <div class="card-data">
+            <table>
+                <tr>
+                    <th>Ingredient</th>
+                    <th>Measurement</th>
+                </tr>
+                <tr v-for='ingredient in drink.ingredients'>
+                    <td>[[ingredient.name]]</td>
+                    <td>[[ingredient.amount]]</td>
+                </tr>
+            </table>
+            <p>[[drink.instructions]]</p>
         </div>
-<script src="{% static 'virtualbarkeep/dvue_script.js' %}" defer></script>
-{% endblock %}
+    </div>
+    </div>
+    <script src="{% static 'virtualbarkeep/dvue_script.js' %}" defer></script>
+    {% endblock %}
