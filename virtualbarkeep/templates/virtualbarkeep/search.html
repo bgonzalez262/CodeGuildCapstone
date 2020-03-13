@@ -17,6 +17,7 @@
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Variations
                     </button>
+
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <button v-for="drink in drinkResults" class="dropdown-item"
                                 v-on:click="advancedFind(drink.name)">
@@ -26,39 +27,38 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!--    cards-->
-    <div class="flip-card" v-for='drink in drinkResults2' id="flipcard">
-      <div class="flip-card-inner">
-        <div class="flip-card-front">
-          <img v-bind:src='drink.image' alt="Avatar" style="width:200px;height:200px;">
+        <!--    cards-->
+        <div class="card-contains">
+            <div class="flip-card" v-for='drink in drinkResults2' id="flipcard">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div>
+                            <img v-bind:src='drink.image' alt="Avatar" style="width:200px;height:200px;border-radius:10px 50px;margin: 20px">
+                        </div>
+                        <div>
+                            <h1>[[drink.name]]</h1>
+                            <h2>Instructions</h2>
+                            <p>[[drink.instructions]]</p>
+                            <hr>
+                            <p>Hover for Ingredients</p>
+                            <h2>Enjoy!!</h2>
+                        </div>
+                    </div>
+                    <div class="flip-card-back">
+                        <table>
+                            <tr>
+                                <th>Ingredient</th>
+                                <th>Measurement</th>
+                            </tr>
+                            <tr v-for='ingredient in drink.ingredients'>
+                                <td>[[ingredient.name]]</td>
+                                <td>[[ingredient.amount]]</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="flip-card-back">
-          <h1>John Doe</h1>
-          <p>Architect & Engineer</p>
-          <p>We love that guy</p>
-        </div>
-      </div>
-</div>
-
-
-    <div class="search-container">
-    <div class="custom-card" v-for='drink in drinkResults2'>
-        <div class="card-img"><img v-bind:src='drink.image' class="card-img-top" alt="..."></div>
-        <div class="card-data">
-            <table>
-                <tr>
-                    <th>Ingredient</th>
-                    <th>Measurement</th>
-                </tr>
-                <tr v-for='ingredient in drink.ingredients'>
-                    <td>[[ingredient.name]]</td>
-                    <td>[[ingredient.amount]]</td>
-                </tr>
-            </table>
-            <p>[[drink.instructions]]</p>
-        </div>
-    </div>
     </div>
     <script src="{% static 'virtualbarkeep/dvue_script.js' %}" defer></script>
     {% endblock %}
