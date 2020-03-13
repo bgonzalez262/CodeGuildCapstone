@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+import json
 
 # Create your views here.
 def index(request):
@@ -47,7 +48,30 @@ def logout_user(request):
 
 @login_required
 def profile(request):
-    return render(request, 'vbk/reglog.html')
+    return render(request, 'virtualbarkeep/profile.html')
+
+# save to event
+def ste(request, drink_id):
+    return HttpResponseRedirect(reverse('vbk:profile'))
+
+# save to favorites
+def stf(request):
+    data= json.loads(request.body)
+    drink = data['name']
+    instruction = data['instructions']
+    ingredients_save = ''
+    measurements_save = ''
+    for i in range(len(data['ingredients'])):
+        ingredient_name = data['ingredients'][i]['name']
+        ingredients_save += ingredient_name + ','
+    for i in range(len(data['ingredients'])):
+        measurement = data['ingredients'][i]['amount']
+        measurements_save += measurement + ','
+    image = data['image']
+    saveddrink = savedDrink(name=drink, image=image, instruction=instruction, ingredient=ingredients_save, measurement=measurements_save)
+    saveddrink.save()
+    print(data)
+    return HttpResponseRedirect(reverse('vbk:profile'))
 
 '''TODO
 -finish adding the users and test register page

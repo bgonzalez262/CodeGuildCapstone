@@ -1,20 +1,20 @@
 // Vue App ---
 let app = new Vue({
-    el:'#app',
+    el: '#app',
     delimiters: [
         '[[',
         ']]',
     ],
     data: {
-        drinkName:'',
-        drinkResults:[],
-        drinkResults2:[],
+        drinkName: '',
+        drinkResults: [],
+        drinkResults2: [],
 
     },
     methods: {
-        mergeIngredients: function(drink) {
+        mergeIngredients: function (drink) {
             let ingredients = []
-            for (let i=1; i<=15; ++i) {
+            for (let i = 1; i <= 15; ++i) {
                 let name = drink['strIngredient' + i]
                 let amount = drink['strMeasure' + i]
                 if (name == null) {
@@ -30,7 +30,7 @@ let app = new Vue({
             }
             return ingredients
         },
-        startFind: function(){
+        startFind: function () {
             axios({
                 method: 'get',
                 url: 'https://www.thecocktaildb.com/api/json/v1/1/search.php',
@@ -38,26 +38,26 @@ let app = new Vue({
                     s: this.drinkName,
                 }
             })
-            .then((response) => {
-                // if (response.data.drink == null){
-                //     alert('Try again')
-                //     return
-                // }
-                let drink_data = response.data.drinks
-                this.drinkResults = []
-                for (let i=0; i<drink_data.length; ++i) {
-                    this.drinkResults.push({
-                        name: drink_data[i].strDrink,
-                        instructions: drink_data[i].strInstructions,
-                        ingredients: this.mergeIngredients(drink_data[i]),
-                        image: drink_data[i].strDrinkThumb,
-                    })
-                }
+                .then((response) => {
+                    // if (response.data.drink == null){
+                    //     alert('Try again')
+                    //     return
+                    // }
+                    let drink_data = response.data.drinks
+                    this.drinkResults = []
+                    for (let i = 0; i < drink_data.length; ++i) {
+                        this.drinkResults.push({
+                            name: drink_data[i].strDrink,
+                            instructions: drink_data[i].strInstructions,
+                            ingredients: this.mergeIngredients(drink_data[i]),
+                            image: drink_data[i].strDrinkThumb,
+                        })
+                    }
 
-            })
+                })
         },
-		advancedFind: function(nameChoice){
-			axios({
+        advancedFind: function (nameChoice) {
+            axios({
                 method: 'get',
                 url: 'https://www.thecocktaildb.com/api/json/v1/1/search.php',
                 params: {
@@ -67,7 +67,7 @@ let app = new Vue({
                 console.log(response.data.drinks)
                 let drink_data2 = response.data.drinks
                 this.drinkResults2 = []
-                for (let i=0; i<drink_data2.length; ++i) {
+                for (let i = 0; i < drink_data2.length; ++i) {
                     this.drinkResults2.push({
                         name: drink_data2[i].strDrink,
                         instructions: drink_data2[i].strInstructions,
@@ -78,15 +78,25 @@ let app = new Vue({
 
             })
 
-    },
-        showCard: function(cardHide){
-            cardHide.setAttribute("class", "card1")
         },
+        addDrinkToFavorites: function(drink) {
+            console.log(drink)
+            axios({
+                method: 'post',
+                url: "/savetf/",
+                data: drink,
+                headers: {
+                    'X-CSRFToken': '{{csrf_token}}',
+                }
+
+            }).then(response =>{
+                console.log(response)
+            })
+        }
     }
-})
+});
 
 // end vue
-function showCard()
-{
+function showCard() {
     document.getElementById('cardHide').setAttribute("class", "card1");
 }

@@ -3,8 +3,10 @@
 {% block content %}
 
 {% include './navbar.html' %}
-<div class="space"></div>
-<div>
+<div class="login-contain">
+  <div class="space-mobile"></div>
+<div class="log-form jumbotron">
+  <h2>Login to Create and Save Events</h2>
 <form action="{% url 'vbk:login_user' %}" method="POST">
     {% csrf_token %}
   <div class="form-group">
@@ -17,6 +19,7 @@
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+</div>
 </div>
 
 {% endblock %}

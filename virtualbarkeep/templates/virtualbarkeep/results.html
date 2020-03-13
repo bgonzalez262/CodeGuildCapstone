@@ -1,12 +1,6 @@
 {% load static %}
+<div id="app">
 <div class="main-header">
-    <div class="btn-grp">
-        <div class="btn-group" id="variations">
-            <button v-for="drink in drinkResults" type="button" class="btn btn-secondary drink-btn"
-                    v-on:click="advancedFind(drink.name)">[[drink.name]]
-            </button>
-        </div>
-    </div>
     <div class="search-container" id="searchid">
         <div class="card-contain">
             <div id="cardId" class="card" style="width: 18rem;" v-for='drink in drinkResults2'><img
@@ -32,6 +26,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 </div>

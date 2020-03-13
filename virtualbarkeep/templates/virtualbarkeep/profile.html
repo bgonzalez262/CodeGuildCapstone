@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% include './navbar.html %}
+<div class="jumbotron jumbotron-fluid jumbotron2">
+    <h1>Welcome {{request.user}}</h1>
+</div>
+{% include './results.html' %}
+{% endblock %}
