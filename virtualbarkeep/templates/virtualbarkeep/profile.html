@@ -5,5 +5,16 @@
 <div class="jumbotron jumbotron-fluid jumbotron2">
     <h1>Welcome {{request.user}}</h1>
 </div>
+<div class="favorites">
+    {% for event in events %}
+    {%for drink in drinks%}
+    <h1>{{event.name}}</h1>
+    <p> {{drink.name}}</p>
+    {% endfor %}
+    {% endfor %}
+
+
+
+</div>
 {% include './results.html' %}
 {% endblock %}

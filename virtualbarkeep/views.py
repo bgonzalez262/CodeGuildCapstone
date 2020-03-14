@@ -2,6 +2,7 @@ from django.shortcuts import render, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from .models import SavedDrink, SavedFood, Event
 from django.contrib.auth.decorators import login_required
 import json
 
@@ -46,9 +47,9 @@ def logout_user(request):
     logout(request)
     return HttpResponseRedirect(reverse('vbk:index'))
 
-@login_required
-def profile(request):
-    return render(request, 'virtualbarkeep/profile.html')
+# @login_required
+# def profile(request):
+#     return render(request, 'virtualbarkeep/profile.html')
 
 # save to event
 def ste(request, drink_id):
@@ -73,6 +74,16 @@ def stf(request):
     print(data)
     return HttpResponseRedirect(reverse('vbk:profile'))
 
+@login_required
+def profile(request):
+    events = Event.objects.all().filter(user=request.user)
+    drinks = SavedDrink.objects.order_by('event')
+    context={
+        'events':events,
+        'drinks':drinks
+    }
+
+    return render(request,'virtualbarkeep/profile.html',context)
 '''TODO
 -finish adding the users and test register page
 -set up "add to" feature, view and profile page
