@@ -47,15 +47,18 @@ def logout_user(request):
     logout(request)
     return HttpResponseRedirect(reverse('vbk:index'))
 
-# @login_required
-# def profile(request):
-#     return render(request, 'virtualbarkeep/profile.html')
+def add_event(request):
+    data = json.loads(request.body)
+    event_name = data['name']
+    attendees = data['attendees']
+    saveevent = Event(name=event_name, attendees=attendees )
+    saveevent.save()
 
-# save to event
+# save to favorites
 def ste(request, drink_id):
     return HttpResponseRedirect(reverse('vbk:profile'))
 
-# save to favorites
+# save to event
 def stf(request):
     data= json.loads(request.body)
     drink = data['name']
@@ -77,15 +80,10 @@ def stf(request):
 @login_required
 def profile(request):
     events = Event.objects.all().filter(user=request.user)
-    drinks = SavedDrink.objects.order_by('event')
+    drinks = SavedDrink.objects.all().filter(user=request.user)
     context={
         'events':events,
         'drinks':drinks
     }
 
     return render(request,'virtualbarkeep/profile.html',context)
-'''TODO
--finish adding the users and test register page
--set up "add to" feature, view and profile page
--model creation
-'''

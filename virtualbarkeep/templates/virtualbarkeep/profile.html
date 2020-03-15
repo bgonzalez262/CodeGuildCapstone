@@ -4,17 +4,75 @@
 {% include './navbar.html %}
 <div class="jumbotron jumbotron-fluid jumbotron2">
     <h1>Welcome {{request.user}}</h1>
-</div>
-<div class="favorites">
-    {% for event in events %}
-    {%for drink in drinks%}
-    <h1>{{event.name}}</h1>
-    <p> {{drink.name}}</p>
-    {% endfor %}
-    {% endfor %}
-
+    <p>Here you will find all of your favorite drinks and any events that you have planned.</p>
+    <a class="btn btn-index btn-lg" href="{% url 'vbk:searchalc' %}" role="button">View Events</a>
+    <a class="btn btn-index btn-lg" href="{% url 'vbk:searchalc' %}" role="button" type="button" data-toggle="modal"
+       data-target="#eventModal">Create Event</a>
+    <a class="btn btn-index btn-lg" href="#searchid" role="button">Food Ideas</a>
 
 
 </div>
-{% include './results.html' %}
+<div class="favorites" id="profile">
+
+<!--    {% for drink in drinks %}-->
+
+    <div class="card">
+
+        <h5 class="card-header">{% for event in events %}Event: {{drink.event.name}}{% endfor %}</h5>
+        <div class="card-body">
+            <h5 class="card-title">{{drink.name}}</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+<!--            <a href="#drinkModal" class="btn btn-primary">Go somewhere</a>-->
+        </div>
+
+    </div>
+<!--    {% endfor %}-->
+
+
+</div>
+
+<!--modals-->
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Register To Create Events!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'vbk:register' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" placeholder="Event Name" aria-label="Event"
+                               aria-describedby="basic-addon1" name="eventname">
+                        <label for="number">Number of Attendees</label>
+                        <input type="number" class="form-control" name="attendees"
+                               aria-describedby="emailHelp">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--end modal-->
+<script>
+    let app = new Vue({
+        el: #profile,
+        delimiters: [
+            '[[', ']]'
+        ],
+        data: {},
+        methods: {}
+
+    })
+</script>
+
+
 {% endblock %}

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class Event(models.Model):
     name = models.CharField(max_length=200)
+    attendees = models.IntegerField(default=2)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -16,6 +17,7 @@ class Favorites(models.Model):
 class SavedDrink(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     event = models.ForeignKey(Event, on_delete=models.PROTECT)
+    add_fav = models.BooleanField(default=True)
     name = models.CharField(max_length=100)
     instruction = models.CharField(max_length=400)
     ingredient = models.CharField(max_length=300)
