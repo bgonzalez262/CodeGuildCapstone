@@ -11,6 +11,7 @@ urlpatterns = [
     path('logout/', views.logout_user, name='logout'),
     path('profile/', views.profile, name='profile'),
     path('savete/', views.ste, name='ste'),
-    path('savetf/', views.stf, name='stf')
+    path('savetf/', views.stf, name='stf'),
+    path('create', views.add_event, name='add_event')
 
 ]

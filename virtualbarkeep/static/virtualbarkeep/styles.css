@@ -113,6 +113,13 @@ body {
     margin-bottom: 0px;
     background-size: cover;
 }
+.profile-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+}
 .search-container {
     display: flex;
     flex-direction: row;
@@ -123,11 +130,11 @@ body {
     width: 100%;
     margin-top: 0px;
 }
+/*card customizations*/
 .card {
     margin: 30px;
 }
-.custom-card {
-    display: flex;
+.custom-card {    display: flex;
 
     height: 210px;
     width: 500px;
@@ -136,20 +143,7 @@ body {
     height: 200px;
     width: 200px;
 }
-
-
-/*styles/curves*/
-
-/* main container-- */
-.container {
-    height: 100%;
-    min-width: 600px !important;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-}
+/*buttons*/
 .drink-btn {
     margin: 5px;
 }
@@ -162,6 +156,8 @@ body {
     margin-top: 40px;
     overflow: scroll;
 }
+
+
 /* card holders-- */
 .card-contains {
     width: 100%;
@@ -193,15 +189,14 @@ body {
 .dpdn {
     margin-top: 20px;
 }
+/*tables on flip cards*/
 table {
     margin: 20px;
-
 }
 table tr td {
     margin: 40px;
 }
 /*flip card*/
-/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
     display: flex;
     flex-direction: row;

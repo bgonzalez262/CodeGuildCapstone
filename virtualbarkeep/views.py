@@ -15,13 +15,21 @@ def searchalc(request):
 
 def register(request):
     if request.method == 'GET':
-        return render(request, 'virtualbarkeep/reglog.html')
+        return render(request, 'virtualbarkeep/login.html')
     username = request.POST['username']
     email = request.POST['email']
     password = request.POST['password']
     User.objects.create_user(username, email, password)
 
     return HttpResponseRedirect(reverse('vbk:index'))
+
+def add_event(request):
+    event_name = request.POST['eventname']
+    attendees = request.POST['attendees']
+    user = request.user
+    saveevent = Event(name=event_name, attendees=attendees, user=user)
+    saveevent.save()
+    return HttpResponseRedirect(reverse('vbk:profile'))
 
 def login_page(request):
     return render(request,'virtualbarkeep/login.html')
@@ -46,13 +54,6 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect(reverse('vbk:index'))
-
-def add_event(request):
-    data = json.loads(request.body)
-    event_name = data['name']
-    attendees = data['attendees']
-    saveevent = Event(name=event_name, attendees=attendees )
-    saveevent.save()
 
 # save to favorites
 def ste(request, drink_id):

@@ -16,8 +16,8 @@ class Favorites(models.Model):
 
 class SavedDrink(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
-    event = models.ForeignKey(Event, on_delete=models.PROTECT)
-    add_fav = models.BooleanField(default=True)
+    event = models.ForeignKey(Event, on_delete=models.PROTECT, related_name='drinks', null=True, blank=True)
+    add_fav = models.BooleanField(default=False)
     name = models.CharField(max_length=100)
     instruction = models.CharField(max_length=400)
     ingredient = models.CharField(max_length=300)
