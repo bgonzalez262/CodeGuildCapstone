@@ -8,6 +8,10 @@ body {
     font-family: 'Quicksand', sans-serif;
     background-color: #606060FF!important;
 }
+.img-btn {
+    transform:scale(1.2);
+    box-shadow:2px 2px 10px rgba(0,0,0,0.3);
+}
 /*navbar---*/
 .logo-div {
     text-align: center;
@@ -45,7 +49,9 @@ body {
     color: white !important;
 }
 /*end navbar---*/
-/*landing/header---*/
+
+/*index pag styles----------*/
+
 .logoimg {
     margin-top: 30px;
 }
@@ -75,6 +81,8 @@ body {
     margin-top: auto;
     margin-bottom: auto;
 }
+
+/*Search page styles------------------*/
 .search-box {
     display: flex;
     align-items: center;
@@ -91,14 +99,15 @@ body {
     width: 400px;
     color: black;
 }
-.btn-index {
-    color: white;
-    background-color: #F95700FF;
+.drink-selector-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: auto;
+    padding-right: auto;
 }
-.btn-index:hover {
-    color: red;
-    background-color: rgb(5, 56, 107);
-}
+
 .space {
     height: 40px;
 }
@@ -130,35 +139,15 @@ body {
     width: 100%;
     margin-top: 0px;
 }
-/*card customizations*/
-.card {
-    margin: 30px;
-}
-.custom-card {    display: flex;
-
-    height: 210px;
-    width: 500px;
-}
 .card-img {
     height: 200px;
     width: 200px;
 }
-/*buttons*/
-.drink-btn {
-    margin: 5px;
-}
-
-.btn-grp {
+.events-cont{
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap !important;
-    width: 600px;
-    margin-top: 40px;
-    overflow: scroll;
+    justify-content: space-evenly;
 }
-
-
-/* card holders-- */
 .card-contains {
     width: 100%;
     height: 100%;
@@ -177,7 +166,50 @@ body {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-evenly;
+}
+.profile-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.favs-cont {
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+    justify-content: center;
 
+    background-color: #F95700FF;
+    width: 75% !important;
+    height: 100%;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    border-radius: 8px;
+}
+.favs-cont h1 {
+    color: #F95700FF;
+}
+.fav-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0px;
+    width: 30%;
+    min-height: 100%;
+    background-color: white;
+    border-radius: 0px 50% 50% 0px;
+}
+.dpdn {
+    margin-top: 20px;
+}
+/*cards--------------------------*/
+/*card customizations*/
+.card {
+    margin: 30px;
+}
+.custom-card {    display: flex;
+
+    height: 210px;
+    width: 500px;
 }
 .card-text {
     display: none;
@@ -186,10 +218,6 @@ body {
 .card1 {
     display: block;
 }
-.dpdn {
-    margin-top: 20px;
-}
-/*tables on flip cards*/
 table {
     margin: 20px;
 }
@@ -255,6 +283,13 @@ table tr td {
     display: flex;
     flex-direction: column;
 }
+
+/*login page styles ------------------------*/
+.login-contain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .log-form {
     display: flex;
     flex-direction: column;
@@ -263,10 +298,26 @@ table tr td {
     text-align: center;
     width: 370px;
 }
-.login-contain {
+/*button styles-----------------------------------*/
+.drink-btn {
+    margin: 5px;
+}
+.btn-grp {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap !important;
+    width: 600px;
+    margin-top: 40px;
+    overflow: scroll;
+}
+.btn-fav-hold {
+    text-align: center;
+    background-color: #F95700FF;
+}
+.fav-btn {
+    color: #F95700FF;
+    margin: 5px 10px;
+    background-color: #D6ED17FF;
 }
 .drink-button{
     background-color: #D6ED17FF !important;
@@ -289,12 +340,33 @@ table tr td {
     margin-right: auto;
     justify-content: space-evenly;
 }
-.btn-contains {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-left: auto;
-    padding-right: auto;
+.btn-index {
+    color: white;
+    background-color: #F95700FF;
+}
+.btn-index:hover {
+    color: red;
+    background-color: rgb(5, 56, 107);
+}
+
+/*scroll to top-------------*/
+#myBtn {
+  display: none; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 20px; /* Place the button at the bottom of the page */
+  right: 30px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: red; /* Set a background color */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 10px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
+}
+
+#myBtn:hover {
+  background-color: #555; /* Add a dark-grey background on hover */
 }
 

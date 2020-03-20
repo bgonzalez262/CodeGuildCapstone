@@ -2,52 +2,58 @@
 {% load static %}
 {% block content %}
 {% include './navbar.html %}
+
+
 <div class="profile-header">
     <div class="jumbotron jumbotron-fluid jumbotron2">
         <h1>Welcome {{request.user}}</h1>
         <p>Here you will find all of your favorite drinks and any events that you have planned.</p>
         <div class="dropdown">
-            <a class="btn btn-index btn-lg dropdown-toggle" href="{% url 'vbk:searchalc' %}" role="button"
+            <a class="btn btn-index btn-lg dropdown-toggle" role="button"
                id="dropdownMenuLink"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Events
-            </a>
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Events</a>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 {% for event in events %}
-                <a class="dropdown-item" href="">{{event.name}}</a>
+                <a class="dropdown-item" href="{% url 'vbk:event_view' event.id %}">{{event.name}}</a>
                 {% endfor %}
             </div>
-            <a class="btn btn-index btn-lg" href="{% url 'vbk:searchalc' %}" role="button" type="button" data-toggle="modal" data-target="#eventModal">Create Event
+            <a class="btn btn-index btn-lg" role="button" type="button"
+               data-toggle="modal" data-target="#eventModal">Create Event
             </a>
-            <a class="btn btn-index btn-lg" href="#searchid" role="button">Food Ideas</a>
         </div>
-
-
     </div>
 </div>
-<div class="favorites" id="profile">
+<div class="profile-main">
 
+{% if has_favorites %}
+<div class="favs-cont">
+    <div class="fav-title">
+        <div>
+            <h1>Favorites</h1>
+        </div>
+    </div>
+    <div class="btn-fav-hold">
+    {% for drink in drinks %}
+        <a class="btn btn-index btn-md fav-btn" href="">{{drink.name}}</a>
+    {% endfor %}
+    </div>
+</div>
+{% endif %}
+<div class="events-cont" id="profile">
     {% for event in events %}
-
     <div class="card">
-
         <h5 class="card-header">Event: {{event.name}}</h5>
-
         <div class="card-body">
             {% for drink in event.drinks.all %}
             <h5 class="card-title">{{drink.name}}</h5>
             <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <!--            <a href="#drinkModal" class="b                                 ewhere</a>-->
             {% endfor %}
         </div>
-
     </div>
     {% endfor %}
-
-
 </div>
-
+</div>
 <!--modals-->
 <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -79,17 +85,7 @@
     </div>
 </div>
 <!--end modal-->
-<script>
-    let app = new Vue({
-        el: #profile,
-        delimiters: [
-            '[[', ']]'
-        ],
-        data: {},
-        methods: {}
 
-    })
-</script>
 
 
 {% endblock %}

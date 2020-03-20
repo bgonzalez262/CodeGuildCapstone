@@ -6,7 +6,8 @@
 {% include './navbar.html %}
 <div class="space"></div>
 <div id="app">
-    <div class="header-container">
+    <div ></div>
+    <div class="header-container" id="#top">
         <div class="search-box">
             <div class="jumbotron jumbotron-fluid jumbotron2">
                 <h1 class="display-4">Drink Search</h1>
@@ -16,7 +17,7 @@
             </div>
         </div>
         <!--    cards-->
-        <div class="btn-contains">
+        <div class="drink-selector-btn">
             <div class="btn-variation">
                 <div id="btn-bar" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                     <div role="group" aria-label="First group">
@@ -61,14 +62,20 @@
                                 <hr>
                             </div>
                             <div class="card-save">
-                                <a><img
+                                <a data-target="#addModalevent"><img
                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Ic_event_available_48px.svg/1024px-Ic_event_available_48px.svg.png"
-                                        alt="" height="100px" width="100px"><br>Add to events
-                                </a>
+                                        alt="" height="100px" width="100px" role="button" type="button"
+                                        data-toggle="modal" data-target="#addModalevent" @click="selectedDrink = drink"></a>
+                                <a class="btn btn-index btn-md" data-toggle="modal" data-target="#addModalevent"
+                                   role="button">Add To Event</a>
+
                                 <a @click="addDrinkToFavorites(drink)"><img
-                                        src="https://cdn.onlinewebfonts.com/svg/img_359120.png" alt=""
-                                        height="100px" width="100px"><br>Add to favorites
-                                </a>
+                                        src="https://cdn.onlinewebfonts.com/svg/img_359120.png" href="#searchid"
+                                        @click="savedAlert()" role="button" height="100px" width="100px"></a>
+                                <a class="btn btn-index btn-md" href="#searchid" @click="savedAlert(); addDrinkToFavorites(drink)" role="button">Add
+                                    to Favorites</a>
+                                <a href="#top" title="Go to top">Top</a>
+
                             </div>
 
 
@@ -78,110 +85,180 @@
             </div>
         </div>
     </div>
+
+    <!--    modal-->
+    <div class="modal fade" id="addModalevent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add to Event</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="addDrinktoEvent" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="event">Select Event</label>
+                            <div class="dropdown" name="event">
+                                <a class="btn btn-index btn-lg dropdown-toggle" role="button" id="dropdownMenuLink"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Events
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    {% for event in events %}
+                                    <a class="dropdown-item" @click="selectedEvent='{{event.id}}'">{{event.name}}</a>
+
+                                    {% endfor %}
+                                </div>
+
+                                <a class="btn btn-index btn-lg" @click="addDrinkToEvent" role="button" type="button"
+                                   data-toggle="modal" data-target="#eventModal">Add To Event
+                                </a>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
+
 
 <script>
     // Vue App ---
-let app = new Vue({
-    el: '#app',
-    delimiters: [
-        '[[',
-        ']]',
-    ],
-    data: {
-        drinkName: '',
-        drinkResults: [],
-        drinkResults2: [],
+    let app = new Vue({
+        el: '#app',
+        delimiters: [
+            '[[',
+            ']]',
+        ],
+        data: {
+            drinkName: '',
+            drinkResults: [],
+            drinkResults2: [],
+            selectedEvent: '',
+            selectedDrink: null,
 
-    },
-    methods: {
-        mergeIngredients: function (drink) {
-            let ingredients = []
-            for (let i = 1; i <= 15; ++i) {
-                let name = drink['strIngredient' + i]
-                let amount = drink['strMeasure' + i]
-                if (name == null) {
-                    break
-                }
-                if (amount == null) {
-                    amount = ''
-                }
-                ingredients.push({
-                    name: name,
-                    amount: amount
-                })
-            }
-            return ingredients
         },
-        startFind: function () {
-            axios({
-                method: 'get',
-                url: 'https://www.thecocktaildb.com/api/json/v1/1/search.php',
-                params: {
-                    s: this.drinkName,
+        methods: {
+            mergeIngredients: function (drink) {
+                let ingredients = []
+                for (let i = 1; i <= 15; ++i) {
+                    let name = drink['strIngredient' + i]
+                    let amount = drink['strMeasure' + i]
+                    if (name == null) {
+                        break
+                    }
+                    if (amount == null) {
+                        amount = ''
+                    }
+                    ingredients.push({
+                        name: name,
+                        amount: amount
+                    })
                 }
-            })
-                .then((response) => {
-                    // if (response.data.drink == null){
-                    //     alert('Try again')
-                    //     return
-                    // }
-                    let drink_data = response.data.drinks
-                    this.drinkResults = []
-                    for (let i = 0; i < drink_data.length; ++i) {
-                        this.drinkResults.push({
-                            name: drink_data[i].strDrink,
-                            instructions: drink_data[i].strInstructions,
-                            ingredients: this.mergeIngredients(drink_data[i]),
-                            image: drink_data[i].strDrinkThumb,
+                return ingredients
+            },
+            startFind: function () {
+                axios({
+                    method: 'get',
+                    url: 'https://www.thecocktaildb.com/api/json/v1/1/search.php',
+                    params: {
+                        s: this.drinkName,
+                    }
+                })
+                    .then((response) => {
+                        // if (response.data.drink == null){
+                        //     alert('Try again')
+                        //     return
+                        // }
+                        let drink_data = response.data.drinks
+                        this.drinkResults = []
+                        for (let i = 0; i < drink_data.length; ++i) {
+                            this.drinkResults.push({
+                                name: drink_data[i].strDrink,
+                                instructions: drink_data[i].strInstructions,
+                                ingredients: this.mergeIngredients(drink_data[i]),
+                                image: drink_data[i].strDrinkThumb,
+                            })
+                        }
+
+                    })
+            },
+            advancedFind: function (nameChoice) {
+                axios({
+                    method: 'get',
+                    url: 'https://www.thecocktaildb.com/api/json/v1/1/search.php',
+                    params: {
+                        s: nameChoice,
+                    }
+                }).then((response) => {
+                    console.log(response.data.drinks)
+                    let drink_data2 = response.data.drinks
+                    this.drinkResults2 = []
+                    for (let i = 0; i < drink_data2.length; ++i) {
+                        this.drinkResults2.push({
+                            name: drink_data2[i].strDrink,
+                            instructions: drink_data2[i].strInstructions,
+                            ingredients: this.mergeIngredients(drink_data2[i]),
+                            image: drink_data2[i].strDrinkThumb,
                         })
                     }
 
                 })
-        },
-        advancedFind: function (nameChoice) {
-            axios({
-                method: 'get',
-                url: 'https://www.thecocktaildb.com/api/json/v1/1/search.php',
-                params: {
-                    s: nameChoice,
-                }
-            }).then((response) => {
-                console.log(response.data.drinks)
-                let drink_data2 = response.data.drinks
-                this.drinkResults2 = []
-                for (let i = 0; i < drink_data2.length; ++i) {
-                    this.drinkResults2.push({
-                        name: drink_data2[i].strDrink,
-                        instructions: drink_data2[i].strInstructions,
-                        ingredients: this.mergeIngredients(drink_data2[i]),
-                        image: drink_data2[i].strDrinkThumb,
-                    })
-                }
 
-            })
+            },
+            addDrinkToFavorites: function (drink) {
+                console.log(drink)
+                axios({
+                    method: 'post',
+                    url: "{% url 'vbk:stf' %}",
+                    data: drink,
+                    headers: {
+                        'X-CSRFToken': '{{csrf_token}}',
+                    }
 
-        },
-        addDrinkToFavorites: function(drink) {
-            console.log(drink)
-            axios({
-                method: 'post',
-                url: "/savetf/",
-                data: drink,
-                headers: {
-                    'X-CSRFToken': '{{csrf_token}}',
-                }
+                }).then(response => {
+                    console.log(response)
+                })
+            },
+            addDrinkToEvent: function () {
+                let drink = this.selectedDrink
+                drink.event = this.selectedEvent
+                console.log(drink)
+                axios({
+                    method: 'post',
+                    url: "{% url 'vbk:ste' %}",
+                    data: drink,
+                    headers: {
+                        'X-CSRFToken': '{{csrf_token}}',
+                    }
 
-            }).then(response =>{
-                console.log(response)
-            })
+                }).then(response => {
+                    console.log(response)
+                })
+            },
+            savedAlert: function () {
+                alert("Added to Favorites")
+            },
+            eventSaved: function () {
+                alert("Saved to your event!")
+            },
+
         }
-    }
-});
+    });
 
-// end vue
-function showCard() {
-    document.getElementById('cardHide').setAttribute("class", "card1");
-}
+    // end vue
+    function showCard() {
+        document.getElementById('cardHide').setAttribute("class", "card1");
+    }
+
+
 </script>
 {% endblock %}
