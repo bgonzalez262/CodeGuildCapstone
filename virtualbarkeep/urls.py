@@ -12,9 +12,11 @@ urlpatterns = [
     path('logout/', views.logout_user, name='logout'),
     path('profile/', views.profile, name='profile'),
     path('savete/', views.ste, name='ste'),
+    path('modalSte/<int:drink_id>/', views.modalSte, name='modalSte'),
     path('savetf/', views.stf, name='stf'),
     path('create/', views.add_event, name='add_event'),
     path('events/<int:event_id>/', views.event_view, name='event_view'),
+    path('event_data/<int:event_id>/', views.event_data, name='event_data'),
 
 
 ]

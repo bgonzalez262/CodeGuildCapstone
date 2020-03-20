@@ -1,8 +1,8 @@
 from django.shortcuts import render, reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .models import SavedDrink, SavedFood, Event
+from .models import SavedDrink, SavedFood, Event, SavedDrinkIngredient
 from django.contrib.auth.decorators import login_required
 import json
 
@@ -16,7 +16,6 @@ def searchalc(request):
     events = Event.objects.all().filter(user=request.user)
     context = {
         'events':events,
-
     }
     return render(request, 'virtualbarkeep/search.html', context)
 
@@ -30,8 +29,12 @@ def register(request):
     username = request.POST['username']
     email = request.POST['email']
     password = request.POST['password']
-    User.objects.create_user(username, email, password)
-
+    first_name = request.POST['firstname']
+    last_name = request.POST['lastname']
+    user = User.objects.create_user(username, email, password)
+    user.first_name = first_name
+    user.last_name = last_name
+    user.save()
     return HttpResponseRedirect(reverse('vbk:index'))
 
 
@@ -82,19 +85,22 @@ def ste(request):
     event = Event.objects.get(id=event_id)
     print(event)
     instruction = data['instructions']
-    ingredients_save = ''
-    measurements_save = ''
-    for i in range(len(data['ingredients'])):
-        ingredient_name = data['ingredients'][i]['name']
-        ingredients_save += ingredient_name + ','
-    for i in range(len(data['ingredients'])):
-        measurement = data['ingredients'][i]['amount']
-        measurements_save += measurement + ','
     image = data['image']
     addfav = False
-    saveddrink = SavedDrink(add_fav=addfav, name=drink, image=image, instruction=instruction, ingredient=ingredients_save, measurement=measurements_save, user=request.user,event=event)
+    saveddrink = SavedDrink(add_fav=addfav, name=drink, image=image, instruction=instruction, user=request.user,event=event)
     saveddrink.save()
+    for ingredient in data['ingredients']:
+        savedingredient = SavedDrinkIngredient(drink=saveddrink, name=ingredient['name'], amount=ingredient['amount'])
+        savedingredient.save()
     print(data)
+    return HttpResponseRedirect(reverse('vbk:profile'))
+
+def modalSte(request,drink_id):
+    drink = SavedDrink.objects.get(id=drink_id)
+    event_id = request.POST['event_id']
+    drink.event_id = event_id
+    drink.save()
+    print(drink)
     return HttpResponseRedirect(reverse('vbk:profile'))
 
 
@@ -104,21 +110,14 @@ def stf(request):
     data = json.loads(request.body)
     drink = data['name']
     instruction = data['instructions']
-    ingredients_save = ''
-    measurements_save = ''
-    for i in range(len(data['ingredients'])):
-        ingredient_name = data['ingredients'][i]['name']
-        ingredients_save += ingredient_name + ','
-    for i in range(len(data['ingredients'])):
-        measurement = data['ingredients'][i]['amount']
-        measurements_save += measurement + ','
     image = data['image']
     addfav = True
-    saveddrink = SavedDrink(add_fav=addfav, name=drink, image=image, instruction=instruction,
-                            ingredient=ingredients_save, measurement=measurements_save, user=request.user)
+    saveddrink = SavedDrink(add_fav=addfav, name=drink, image=image, instruction=instruction, user=request.user)
     saveddrink.save()
+    for ingredient in data['ingredients']:
+        savedingredient = SavedDrinkIngredient(drink=saveddrink, name=ingredient['name'], amount=ingredient['amount'])
+        savedingredient.save()
     print(data)
-    alert("Saved!")
     return HttpResponseRedirect(reverse('vbk:profile'))
 
 # Log in required. Displays selectable event for viewing and favorite drinks---
@@ -126,10 +125,12 @@ def stf(request):
 def profile(request):
     events = Event.objects.all().filter(user=request.user)
     drinks = SavedDrink.objects.all().filter(user=request.user, add_fav=True)
+    ingredients = SavedDrinkIngredient.objects.all()
     has_favorites = request.user.saveddrink_set.filter(add_fav=True).count()>0
     context = {
         'events': events,
         'drinks': drinks,
+        'ingredients': ingredients,
         'has_favorites': has_favorites,
     }
     return render(request, 'virtualbarkeep/profile.html', context)
@@ -138,10 +139,37 @@ def profile(request):
 @login_required
 def event_view(request,event_id):
     event = Event.objects.get(id=event_id)
-    
     context = {
         'event': event,
+
     }
-    print(event.drink)
     return render(request, 'virtualbarkeep/events.html', context)
+
+def event_data(request, event_id):
+    event = Event.objects.get(id=event_id)
+    data = {
+        'event_name': event.name,
+        'attendees': event.attendees,
+        'drinks': [],
+    }
+
+    for drink in event.drinks.all():
+        ingredients = []
+        for ingredient in drink.ingredients.all():
+            ingredients.append({
+                'name':ingredient.name,
+                'amount':ingredient.amount,
+            })
+            print(ingredient.name)
+
+        data['drinks'].append({
+            'name': drink.name,
+            'instructions': drink.instruction,
+            'image': drink.image,
+            'ingredients': ingredients,
+            })
+    return JsonResponse(data)
+
+
+
 

@@ -39,6 +39,7 @@
                                      style="width:200px;height:200px;border-radius:10px 50px;margin: 20px">
                             </div>
                             <div>
+
                                 <h1>[[drink.name]]</h1>
                                 <hr>
                                 <table>
@@ -72,8 +73,10 @@
                                 <a @click="addDrinkToFavorites(drink)"><img
                                         src="https://cdn.onlinewebfonts.com/svg/img_359120.png" href="#searchid"
                                         @click="savedAlert()" role="button" height="100px" width="100px"></a>
+
                                 <a class="btn btn-index btn-md" href="#searchid" @click="savedAlert(); addDrinkToFavorites(drink)" role="button">Add
                                     to Favorites</a>
+
                                 <a href="#top" title="Go to top">Top</a>
 
                             </div>
@@ -98,8 +101,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="addDrinktoEvent" method="POST">
-                        {% csrf_token %}
                         <div class="form-group">
                             <label for="event">Select Event</label>
                             <div class="dropdown" name="event">
@@ -119,9 +120,7 @@
                                 </a>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </form>
                 </div>
 
             </div>

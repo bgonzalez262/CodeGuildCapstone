@@ -18,12 +18,18 @@ class SavedDrink(models.Model):
     add_fav = models.BooleanField(default=False)
     name = models.CharField(max_length=100)
     instruction = models.CharField(max_length=400)
-    ingredient = models.CharField(max_length=300)
-    measurement = models.CharField(max_length=300)
     image = models.CharField(max_length=300)
 
     def __str__(self):
         return self.user.username + ' ' + self.name
+
+class SavedDrinkIngredient(models.Model):
+    drink = models.ForeignKey(SavedDrink, on_delete=models.PROTECT, related_name='ingredients')
+    name = models.CharField(max_length=100)
+    amount = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.drink.name + ' ' + self.name
 
 class SavedFood(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
@@ -33,6 +39,8 @@ class SavedFood(models.Model):
 
     def __str__(self):
         return self.user.username + ' ' + self.name
+
+
 
 
 

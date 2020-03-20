@@ -6,7 +6,7 @@
 
 <div class="profile-header">
     <div class="jumbotron jumbotron-fluid jumbotron2">
-        <h1>Welcome {{request.user}}</h1>
+        <h1>Welcome {{request.user.first_name}}</h1>
         <p>Here you will find all of your favorite drinks and any events that you have planned.</p>
         <div class="dropdown">
             <a class="btn btn-index btn-lg dropdown-toggle" role="button"
@@ -26,33 +26,71 @@
 </div>
 <div class="profile-main">
 
-{% if has_favorites %}
-<div class="favs-cont">
-    <div class="fav-title">
-        <div>
-            <h1>Favorites</h1>
+    {% if has_favorites %}
+    <div class="favs-cont">
+        <div class="fav-title">
+            <div>
+                <h1>Favorites</h1>
+            </div>
         </div>
-    </div>
-    <div class="btn-fav-hold">
-    {% for drink in drinks %}
-        <a class="btn btn-index btn-md fav-btn" href="">{{drink.name}}</a>
-    {% endfor %}
-    </div>
-</div>
-{% endif %}
-<div class="events-cont" id="profile">
-    {% for event in events %}
-    <div class="card">
-        <h5 class="card-header">Event: {{event.name}}</h5>
-        <div class="card-body">
-            {% for drink in event.drinks.all %}
-            <h5 class="card-title">{{drink.name}}</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <div class="btn-fav-hold">
+            {% for drink in drinks %}
+            <a class="btn btn-index btn-md fav-btn" data-toggle="modal"
+               data-target="#drinkModal{{forloop.counter}}">{{drink.name}}</a>
+            <!--drink modal-->
+            <div class="modal fade" id="drinkModal{{forloop.counter}}" tabindex="-1" role="dialog"
+                 aria-labelledby="drinkModalTitle{{forloop.counter}}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="drinkModalTitle{{forloop.counter}}">{{drink.name}}</h5>
+                        </div>
+
+                        <div class="modal-body">
+                            <h5>{{drink.instruction}}</h5>
+                            {% for ingredient in drink.ingredients.all %}
+                            <table>
+                                <tr v-for='ingredient in drink.ingredients'>
+                                    <td>{{ingredient.name}}: <strong>{{ingredient.amount}}</strong></td>
+                                </tr>
+                            </table>
+                            {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Delete From Favorites</button>
+                            <form action="{% url 'vbk:modalSte' drink.id %}" method="post">
+                                {% csrf_token %}
+                                <select name="event_id">
+                                    {% for event in events %}
+                                    <option value="{{event.id}}">{{event.name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="btn btn-primary">Add to Event</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {% endfor %}
         </div>
     </div>
-    {% endfor %}
-</div>
+    {% endif %}
+    <div class="events-cont" id="profile">
+        {% for event in events %}
+        <div class="card">
+            <h5 class="card-header">Event: {{event.name}}</h5>
+            <div class="card-body">
+                {% for drink in event.drinks.all %}
+                <h5 class="card-title">{{drink.name}}</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 <!--modals-->
 <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -85,7 +123,6 @@
     </div>
 </div>
 <!--end modal-->
-
 
 
 {% endblock %}

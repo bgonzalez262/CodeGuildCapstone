@@ -176,7 +176,7 @@ body {
     display: flex;
     flex-direction: row;
     overflow: auto;
-    justify-content: center;
+    align-items: center;
 
     background-color: #F95700FF;
     width: 75% !important;

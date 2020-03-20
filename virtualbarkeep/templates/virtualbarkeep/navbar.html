@@ -1,6 +1,6 @@
 
 <nav class="navbar fixed-top navbar-light bg-light">
-    <div>Welcome {{request.user}}
+    <div>Welcome {{request.user.first_name}}
     <li><a href="{% url 'vbk:profile' %}">View Profile</a></li>
     </div>
     <div class="logo-div"><a class="navbar-brand" href="{% url 'vbk:index' %}">V | B</a> </div>
@@ -30,6 +30,8 @@
                     <form action="{% url 'vbk:register' %}" method="POST">
                         {% csrf_token %}
                         <div class="form-group">
+                            <input type="text" class="form-control" placeholder="First Name" aria-label="First Name" aria-describedby="basic-addon1" name="firstname">
+                            <input type="text" class="form-control" placeholder="Last Name" aria-label="Last Name" aria-describedby="basic-addon1" name="lastname">
                             <label for="username">Username</label>
                             <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="username">
                             <label for="email">Email address</label>
