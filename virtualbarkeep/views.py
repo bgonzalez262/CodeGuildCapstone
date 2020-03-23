@@ -107,13 +107,14 @@ def modalSte(request,drink_id):
 # save drink to favorites. Shown on the profile page.
 @login_required
 def stf(request):
-
     data = json.loads(request.body)
-
     print(data)
     drink = data['name']
     instruction = data['instructions']
     image = data['image']
+    if SavedDrink.objects.filter(user=request.user, name=drink, add_fav=True).exists():
+        return HttpResponse("Already exists")
+
     addfav = True
     saveddrink = SavedDrink(add_fav=addfav, name=drink, image=image, instruction=instruction, user=request.user)
     saveddrink.save()

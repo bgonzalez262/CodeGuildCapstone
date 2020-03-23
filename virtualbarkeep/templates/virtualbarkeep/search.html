@@ -223,6 +223,9 @@
                     }
 
                 }).then(response => {
+                    if (response.data=='Already exists'){
+                        alert("You already favorited that drink.")
+                    }
                     console.log(response)
                 })
             },

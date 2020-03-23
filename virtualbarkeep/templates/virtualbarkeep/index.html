@@ -13,7 +13,7 @@
             <hr class="my-4">
             <p>TAKE YOUR TASTE BUDS ON A JOURNEY</p>
             <a class="btn btn-index btn-lg" href="{% url 'vbk:searchalc' %}" role="button">SEARCH FOR DRINKS</a>
-            <a class="btn btn-index btn-lg" @click="randomFind()" role="button">SHOW ME SOME DRINKS</a>
+            <a class="btn btn-index btn-lg" @click="randomFind" role="button">SHOW ME SOME DRINKS</a>
         </div>
     </div>
 </div>
@@ -29,12 +29,12 @@
         },
         methods:{
             randomFind: function () {
-            axios({
-                method: 'get',
-                url: 'https://www.thecocktaildb.com/api/json/v2/9973533/randomselection.php',
-                params: {},
+                axios({
+                    method: 'get',
+                    url: 'https://www.thecocktaildb.com/api/json/v2/9973533/randomselection.php',
+                    params: {},
 
-            })
+                })
                 .then((response) => {
                     let drinks_data = response.data.drinks
                     console.log(drinks_data)
@@ -44,10 +44,10 @@
                             name: drinks_data[i].strDrink,
                             image: drinks_data[i].strDrinkThumb,
                         })
-                    console.log(this.randomDrinks)
                     }
+                    console.log(this.randomDrinks)
                 })
-        },
+            },
         },
     })
 </script>
