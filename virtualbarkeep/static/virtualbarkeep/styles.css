@@ -1,12 +1,20 @@
 html {
     scroll-behavior: smooth;
+    margin: 0px;
+    padding: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
 }
 body {
     margin: 0px;
     padding: 0px;
     margin-bottom: 0px;
+    margin-top: 0px;
     font-family: 'Quicksand', sans-serif;
-    background-color: #606060FF!important;
+    background-image: url("./images/bottom.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
 }
 .img-btn {
     transform:scale(1.2);
@@ -20,8 +28,8 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: #F95700FF!important;
-    color: white;
+    background-color: #deff2a!important;
+    color: #00550b;
     margin-bottom: 30px;
 }
 .navbar li {
@@ -39,14 +47,15 @@ body {
 }
 .navbar li a {
     display: inline-block;
-    color: white;
+    color: #00550b;
     padding: 8px 8px;
 }
 .navbar li a:hover {
     color: red;
 }
 .navbar-brand {
-    color: white !important;
+    color: #00550b !important;
+    font-size: 30px !important;
 }
 /*end navbar---*/
 
@@ -56,7 +65,8 @@ body {
     margin-top: 30px;
 }
 .header-container {
-    margin-top: 10px;
+    margin-top: 90px;
+
     padding-top: 5px;
     display: flex;
     flex-direction: column;
@@ -64,15 +74,17 @@ body {
     color: black;
     height: 100vh;
     width: 100vw;
-    justify-content: center;
+    justify-content: start;
 
+}
+.jumbotron {
+    padding: 2px 32px !important;
 }
 .jumbotron2 {
     text-align: center;
-    background-color: #D6ED17FF;
-    margin-top: 90px;
+    background-color: rgba(0,0,0,0);
     border-radius: 25% 10px;
-    width: 1000px !important;
+    width: 100% !important;
 }
 .search-header {
     display: flex;
@@ -80,6 +92,14 @@ body {
     align-items: center;
     margin-top: auto;
     margin-bottom: auto;
+}
+.index-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
+    margin-bottom: auto;
+
 }
 
 /*Search page styles------------------*/
@@ -168,9 +188,12 @@ body {
     justify-content: space-evenly;
 }
 .profile-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*align-items: center;*/
+    margin-top: 60px;
+    height: 100%;
+    width: 80vw;
 }
 .favs-cont {
     display: flex;
@@ -349,6 +372,26 @@ table tr td {
     background-color: rgb(5, 56, 107);
 }
 
+.fav-btn-cust {
+	box-shadow: 0px 10px 14px -7px #000000;
+	/*background:linear-gradient(to bottom, #f95700 5%, #f95700 100%);*/
+	background-color:white;
+	border-radius:2px;
+	display:inline-block;
+	cursor:pointer;
+	color:#f95700;
+    margin: 20px;
+	font-size:18px;
+	padding:13px 32px;
+	text-decoration:none;
+	text-shadow:0px 1px 6px #ff8585;
+}
+.fav-btn-cust:hover {
+	background-color:white;
+    color: red;
+}
+
+
 /*scroll to top-------------*/
 #myBtn {
   display: none; /* Hidden by default */
@@ -366,7 +409,65 @@ table tr td {
   font-size: 18px; /* Increase font size */
 }
 
-#myBtn:hover {
-  background-color: #555; /* Add a dark-grey background on hover */
+#myBtn a:hover {
+  background-color: white; /* Add a dark-grey background on hover */
+    color: red;
 }
 
+/*sidebar nav*/
+/* The side navigation menu */
+.sidebar1 {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+/* Sidebar links */
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+
+/* Active/current link */
+.sidebar a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Links on mouse-over */
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+  .sidebar1 {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}

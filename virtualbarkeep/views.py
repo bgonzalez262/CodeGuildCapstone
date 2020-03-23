@@ -107,7 +107,10 @@ def modalSte(request,drink_id):
 # save drink to favorites. Shown on the profile page.
 @login_required
 def stf(request):
+
     data = json.loads(request.body)
+
+    print(data)
     drink = data['name']
     instruction = data['instructions']
     image = data['image']

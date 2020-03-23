@@ -4,7 +4,7 @@
 {% include './navbar.html %}
 
 
-<div class="profile-header">
+<div class="header-container">
     <div class="jumbotron jumbotron-fluid jumbotron2">
         <h1>Welcome {{request.user.first_name}}</h1>
         <p>Here you will find all of your favorite drinks and any events that you have planned.</p>
@@ -23,20 +23,14 @@
             </a>
         </div>
     </div>
-</div>
+
 <div class="profile-main">
 
     {% if has_favorites %}
-    <div class="favs-cont">
-        <div class="fav-title">
-            <div>
-                <h1>Favorites</h1>
-            </div>
-        </div>
-        <div class="btn-fav-hold">
             {% for drink in drinks %}
-            <a class="btn btn-index btn-md fav-btn" data-toggle="modal"
-               data-target="#drinkModal{{forloop.counter}}">{{drink.name}}</a>
+            <a class="fav-btn-cust" data-toggle="modal"
+               data-target="#drinkModal{{forloop.counter}}">{{drink.name}}
+            </a>
             <!--drink modal-->
             <div class="modal fade" id="drinkModal{{forloop.counter}}" tabindex="-1" role="dialog"
                  aria-labelledby="drinkModalTitle{{forloop.counter}}" aria-hidden="true">
@@ -51,7 +45,7 @@
                             <h5>{{drink.instruction}}</h5>
                             {% for ingredient in drink.ingredients.all %}
                             <table>
-                                <tr v-for='ingredient in drink.ingredients'>
+                                <tr>
                                     <td>{{ingredient.name}}: <strong>{{ingredient.amount}}</strong></td>
                                 </tr>
                             </table>
@@ -75,23 +69,11 @@
             </div>
 
             {% endfor %}
-        </div>
-    </div>
+
+
     {% endif %}
-    <div class="events-cont" id="profile">
-        {% for event in events %}
-        <div class="card">
-            <h5 class="card-header">Event: {{event.name}}</h5>
-            <div class="card-body">
-                {% for drink in event.drinks.all %}
-                <h5 class="card-title">{{drink.name}}</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                {% endfor %}
-            </div>
-        </div>
-        {% endfor %}
     </div>
-</div>
+
 <!--modals-->
 <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">

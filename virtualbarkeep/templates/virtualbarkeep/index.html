@@ -3,29 +3,53 @@
 {% load static %}
 {% block content %}
 
-
-<div class="header-container">
-
-    <div>
-        <nav>
-            {% include './navbar.html' %}
-        </nav>
-    </div>
-    <div class="search-header">
-<!--        <div class="logoimg">-->
-<!--            <img src="{% static 'virtualbarkeep/images/logo.png' %}" height="300px" width="300px" alt="">-->
-<!--        </div>-->
+{% include './navbar.html' %}
+<div class="header-container" id="random">
+    <div class="index-header">
         <div class="jumbotron jumbotron2">
             <img src="{% static 'virtualbarkeep/images/logo.png' %}" height="200px" width="200px" alt="">
             <h1 class="display-4">Hello,</h1>
-            <p class="lead">Welcome to your very own, and personal Virtual Barkeep.. </p>
+            <p class="lead"><strong>welcome to your very own virtual drink assistant..</strong> </p>
             <hr class="my-4">
-            <p>Get rid of the "what do I want?" in your life and let your Barkeep give you some ideas.</p>
-            <a class="btn btn-index btn-lg" href="{% url 'vbk:searchalc' %}" role="button">Drink Ideas</a>
-            <a class="btn btn-index btn-lg" href="#searchid" role="button">Food Ideas</a>
+            <p>TAKE YOUR TASTE BUDS ON A JOURNEY</p>
+            <a class="btn btn-index btn-lg" href="{% url 'vbk:searchalc' %}" role="button">SEARCH FOR DRINKS</a>
+            <a class="btn btn-index btn-lg" @click="randomFind()" role="button">SHOW ME SOME DRINKS</a>
         </div>
     </div>
-
-
 </div>
+<script>
+    let app = new Vue({
+        el: '#random',
+        delimiters: [
+            '[[',
+            ']]',
+            ],
+        data:{
+            randomDrinks: [],
+        },
+        methods:{
+            randomFind: function () {
+            axios({
+                method: 'get',
+                url: 'https://www.thecocktaildb.com/api/json/v2/9973533/randomselection.php',
+                params: {},
+
+            })
+                .then((response) => {
+                    let drinks_data = response.data.drinks
+                    console.log(drinks_data)
+                    this.randomDrinks = []
+                    for (let i = 0; i < drinks_data.length; ++i) {
+                        this.randomDrinks.push({
+                            name: drinks_data[i].strDrink,
+                            image: drinks_data[i].strDrinkThumb,
+                        })
+                    console.log(this.randomDrinks)
+                    }
+                })
+        },
+        },
+    })
+</script>
+
 {% endblock %}
