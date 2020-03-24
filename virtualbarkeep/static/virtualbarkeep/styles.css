@@ -11,9 +11,9 @@ body {
     margin-bottom: 0px;
     margin-top: 0px;
     font-family: 'Quicksand', sans-serif;
-    background-image: url("./images/bottom.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
+    /*background-image: url("./images/bottom.jpg");*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
 
 }
 .img-btn {
@@ -31,6 +31,7 @@ body {
     background-color: #deff2a!important;
     color: #00550b;
     margin-bottom: 30px;
+    height: 80px;
 }
 .navbar li {
     display: inline;
@@ -65,8 +66,10 @@ body {
     margin-top: 30px;
 }
 .header-container {
-    margin-top: 90px;
-
+    margin-top: 40px;
+    background-image: url("./images/bottom.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
     padding-top: 5px;
     display: flex;
     flex-direction: column;
@@ -97,8 +100,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 80px;
-    margin-bottom: auto;
+    margin-top: 20px;
+    /*margin-bottom: auto;*/
 
 }
 
@@ -174,7 +177,7 @@ body {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    align-items: center;
+    /*align-items: center;*/
     justify-content: space-between;
     padding: 0px 10px;
 }
@@ -184,13 +187,10 @@ body {
     height: 100%;
     flex-direction: row;
     flex-wrap: wrap;
-    align-items: center;
+    /*align-items: center;*/
     justify-content: space-evenly;
 }
 .profile-main {
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*align-items: center;*/
     margin-top: 60px;
     height: 100%;
     width: 80vw;
@@ -200,7 +200,6 @@ body {
     flex-direction: row;
     overflow: auto;
     align-items: center;
-
     background-color: #F95700FF;
     width: 75% !important;
     height: 100%;
@@ -251,16 +250,13 @@ table tr td {
 .flip-card {
     display: flex;
     flex-direction: row;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     margin: 10px;
     background-color: transparent;
     width: 400px;
-    height: 700px;
-    /*border: 1px solid #5cdb95;*/
-    perspective: 1000px; /* Remove this if you don't want the 3D effect */
+    height: 600px;
+    perspective: 1000px;
     border-radius: 6px;
 }
-/* This container is needed to position the front and back side */
 .flip-card-inner {
     display: flex;
     flex-direction: column;
@@ -272,7 +268,6 @@ table tr td {
     transform-style: preserve-3d;
     border-radius: 6px;
 }
-/* Do an horizontal flip when you move the mouse over the flip box container */
 .flip-card:hover .flip-card-inner {
     transform: rotateY(180deg);
 }
@@ -288,7 +283,7 @@ table tr td {
 .flip-card-front {
     display: flex;
     flex-direction: column;
-    background-color: #F95700FF;
+    background-color: #00550b;
     color: black;
     border-radius: 6px;
     padding: 20px;
@@ -297,7 +292,7 @@ table tr td {
 .flip-card-back {
     display: flex;
     flex-direction: column;
-    background-color: #F95700FF;
+    background-color: #00550b;
     color: white;
     transform: rotateY(180deg);
     border-radius: 6px;
@@ -426,25 +421,6 @@ table tr td {
   overflow: auto;
 }
 
-/* Sidebar links */
-.sidebar a {
-  display: block;
-  color: black;
-  padding: 16px;
-  text-decoration: none;
-}
-
-/* Active/current link */
-.sidebar a.active {
-  background-color: #4CAF50;
-  color: white;
-}
-
-/* Links on mouse-over */
-.sidebar a:hover:not(.active) {
-  background-color: #555;
-  color: white;
-}
 
 /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
 div.content {
@@ -452,7 +428,82 @@ div.content {
   padding: 1px 16px;
   height: 1000px;
 }
+/*profile random container*/
+.random-cont {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 85vw;
+    height: 100vh;
+    /*margin-top: 60px;*/
+    padding-top: 90px;
+    flex-wrap: wrap;
+}
+.random-card {
+    height: 300px;
+    width: 300px;
+    margin: 20px;
+}
+.rand-name {
 
+    opacity: 1 !important;
+}
+.main-cont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 2000px;
+    background-color: rgba(0,85,11,.3);
+
+
+}
+/*custom cards*/
+
+.card {
+  margin: 30px auto;
+  width: 300px;
+  height: 300px;
+  border-radius: 40px;
+box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.card .card_image {
+  width: inherit;
+  height: inherit;
+  border-radius: 40px;
+}
+
+.card .card_image img {
+  width: inherit;
+  height: inherit;
+  border-radius: 40px;
+  object-fit: cover;
+}
+
+.card .card_title {
+  text-align: center;
+  border-radius: 0px 0px 40px 40px;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+  margin-top: -80px;
+  height: 40px;
+}
+
+.card:hover {
+  transform: scale(0.9, 0.9);
+  box-shadow: 5px 5px 30px 15px rgba(0,0,0,0.25),
+    -5px -5px 30px 15px rgba(0,0,0,0.22);
+}
+
+.title-white {
+  color: white;
+}
+
+/*media queries*/
 /* On screens that are less than 700px wide, make the sidebar into a topbar */
 @media screen and (max-width: 700px) {
   .sidebar1 {

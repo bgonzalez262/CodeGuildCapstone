@@ -28,3 +28,6 @@ background-color: rgba(214,237,23,.7);
 
                                 instructions: drinks_data[i].strInstructions,
                                 ingredients: this.mergeIngredients(drinks_data[i]),
+
+
+:style="'background-image: url(\''+ drink.image +'\');background-repeat: no-repeat;background-size: cover;'"
