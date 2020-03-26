@@ -1,40 +1,69 @@
 <!--The index page is the home view and contains the search box with what your searching-->
 {% extends 'base.html' %}
 {% load static %}
-{% block content %}
 
+{% block content %}
 {% include './navbar.html' %}
+
 <div id="random">
-<div class="header-container">
-    <div class="index-header">
-        <div class="jumbotron jumbotron2">
-            <img src="{% static 'virtualbarkeep/images/logo.png' %}" height="200px" width="200px" alt="">
-            <h1 class="display-4">Hello,</h1>
-            <p class="lead"><strong>welcome to your very own virtual drink assistant..</strong></p>
-            <hr class="my-4">
-            <p>TAKE YOUR TASTE BUDS ON A JOURNEY</p>
-            <a class="btn btn-index btn-lg" href="{% url 'vbk:searchalc' %}" role="button">SEARCH FOR DRINKS</a>
-            <a class="btn btn-index btn-lg" @click="randomFind" href="#randomcont" role="button">SHOW ME SOME DRINKS</a>
+    <div class="header-container">
+        <div class="index-header">
+            <div class="jumbotron jumbotron2">
+                <img src="{% static 'virtualbarkeep/images/logo.png' %}" height="200px" width="200px" alt="">
+                <h1 class="display-4">Hello,</h1>
+                <p class="lead"><strong>welcome to your very own virtual drink assistant..</strong></p>
+                <hr class="my-4">
+                <p>TAKE YOUR TASTE BUDS ON A JOURNEY</p>
+                <a class="btn btn-index btn-lg" href="{% url 'vbk:searchalc' %}" role="button">SEARCH FOR DRINKS</a>
+                <a class="btn btn-index btn-lg" @click="randomFind" href="#randomcont" role="button">SHOW ME SOME
+                    DRINKS</a>
+            </div>
         </div>
     </div>
-</div>
-    <div class="main-cont">
-    <div class="random-cont" id="randomcont">
-        <div class="card" v-for="drink in randomDrinks" >
-            <div class="card_image">
+    <div class="cluster-cont" v-if="randomDrinks.length > 0">
+        <div v-for="drink in randomDrinks" class="card">
+            <a class="card_image" @click="showModal = true">
                 <img v-bind:src="[[drink.image]]" alt="">
-            </div>
+            </a>
             <div class="card_title title-white">
                 <p>[[drink.name]]</p>
             </div>
         </div>
 
-    </div>
+
+        <div v-if="showModal">
+            <transition name="modal">
+                <div class="modal-mask">
+                    <div class="modal-wrapper">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" @click="showModal = false">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Modal body text goes here.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" @click="showModal = false">Close
+                                    </button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </transition>
         </div>
+
+
     </div>
 
 
-
+</div><!--app ending div-->
+<script src="https://unpkg.com/vue"></script>
 <script>
     let app = new Vue({
         el: '#random',
@@ -44,6 +73,7 @@
         ],
         data: {
             randomDrinks: [],
+            showModal: false,
         },
         methods: {
             randomFind: function () {

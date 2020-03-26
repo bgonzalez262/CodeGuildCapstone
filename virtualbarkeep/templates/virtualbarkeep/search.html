@@ -6,14 +6,36 @@
 {% include './navbar.html %}
 <div class="space"></div>
 <div id="app">
-    <div ></div>
+    <div></div>
     <div class="header-container" id="#top">
         <div class="search-box">
-            <div class="jumbotron jumbotron-fluid jumbotron2">
+            <div class="jumbotron jumbotron-fluid jumbotron3">
                 <h1 class="display-4">Drink Search</h1>
                 <p class="lead">Type the name of a drink to see results.</p>
-                <input type="text" v-model='drinkName' v-on:keyup.enter='startFind'>
-                <a href="#btn-bar" class="search-btn" v-on:click="startFind">Search</a>
+                <input type="text" class="form-control input-cust" v-model='drinkName' v-on:keyup.enter='startFind'>
+                <div class="input-search">
+                    <a href="#btn-bar" class="search-btn input-search" v-on:click="startFind">GO</a>
+                </div>
+
+
+
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" aria-label="Text input with dropdown button">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Search Type
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Drink Name</a>
+                            <div role="separator" class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Ingredient</a>
+
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
         <!--    cards-->
@@ -28,8 +50,8 @@
                 </div>
             </div>
         </div>
-        </div>
-        <div class="main-cont" id="cardid">
+    </div>
+    <div class="main-cont" id="cardid">
         <div class="card-contains">
             <div class="flip-contain">
                 <div class="flip-card" v-for='drink in drinkResults2' id="flipcard">
@@ -40,7 +62,6 @@
                                      style="width:200px;height:200px;border-radius:10px 50px;margin: 20px">
                             </div>
                             <div>
-
                                 <h1>[[drink.name]]</h1>
                                 <hr>
                                 <table>
@@ -54,7 +75,6 @@
                                     </tr>
                                 </table>
                                 <div id="cardid"></div>
-
                             </div>
                         </div>
                         <div class="flip-card-back">
@@ -70,25 +90,20 @@
                                         data-toggle="modal" data-target="#addModalevent" @click="selectedDrink = drink"></a>
                                 <a class="btn btn-index btn-md" data-toggle="modal" data-target="#addModalevent"
                                    role="button">Add To Event</a>
-
                                 <a @click="addDrinkToFavorites(drink)"><img
                                         src="https://cdn.onlinewebfonts.com/svg/img_359120.png" href="#searchid"
                                         @click="savedAlert()" role="button" height="100px" width="100px"></a>
-
-                                <a class="btn btn-index btn-md" href="#searchid" @click="savedAlert(); addDrinkToFavorites(drink)" role="button">Add
+                                <a class="btn btn-index btn-md" href="#searchid"
+                                   @click="savedAlert(); addDrinkToFavorites(drink)" role="button">Add
                                     to Favorites</a>
-
                                 <a href="#top" title="Go to top">Top</a>
-
                             </div>
-
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-            </div>
+    </div>
 
 
     <!--    modal-->
@@ -103,26 +118,26 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                        <div class="form-group">
-                            <label for="event">Select Event</label>
-                            <div class="dropdown" name="event">
-                                <a class="btn btn-index btn-lg dropdown-toggle" role="button" id="dropdownMenuLink"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Events
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    {% for event in events %}
-                                    <a class="dropdown-item" @click="selectedEvent='{{event.id}}'">{{event.name}}</a>
+                    <div class="form-group">
+                        <label for="event">Select Event</label>
+                        <div class="dropdown" name="event">
+                            <a class="btn btn-index btn-lg dropdown-toggle" role="button" id="dropdownMenuLink"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Events
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                {% for event in events %}
+                                <a class="dropdown-item" @click="selectedEvent='{{event.id}}'">{{event.name}}</a>
 
-                                    {% endfor %}
-                                </div>
-
-                                <a class="btn btn-index btn-lg" @click="addDrinkToEvent" role="button" type="button"
-                                   data-toggle="modal" data-target="#eventModal">Add To Event
-                                </a>
+                                {% endfor %}
                             </div>
+
+                            <a class="btn btn-index btn-lg" @click="addDrinkToEvent" role="button" type="button"
+                               data-toggle="modal" data-target="#eventModal">Add To Event
+                            </a>
                         </div>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
 
             </div>
@@ -226,7 +241,7 @@
                     }
 
                 }).then(response => {
-                    if (response.data=='Already exists'){
+                    if (response.data == 'Already exists') {
                         alert("You already favorited that drink.")
                     }
                     console.log(response)

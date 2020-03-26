@@ -5,106 +5,130 @@
 
 
 <div class="header-container">
-    <div class="jumbotron jumbotron-fluid jumbotron2">
+    <div class="jumbotron jumbotron-fluid jumbotron3">
         <h1>Welcome {{request.user.first_name}}</h1>
         <p>Here you will find all of your favorite drinks and any events that you have planned.</p>
         <div class="dropdown">
             <a class="btn btn-index btn-lg dropdown-toggle" role="button"
                id="dropdownMenuLink"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Events</a>
-
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 {% for event in events %}
-                <a class="dropdown-item" href="{% url 'vbk:event_view' event.id %}">{{event.name}}</a>
+                <a id="eventbtn" class="dropdown-item" href="{% url 'vbk:event_view' event.id %}">{{event.name}}</a>
                 {% endfor %}
             </div>
-            <a class="btn btn-index btn-lg" role="button" type="button"
-               data-toggle="modal" data-target="#eventModal">Create Event
-            </a>
-        </div>
-    </div>
-
-<div class="profile-main">
-
-    {% if has_favorites %}
-            {% for drink in drinks %}
-            <a class="fav-btn-cust" data-toggle="modal"
-               data-target="#drinkModal{{forloop.counter}}">{{drink.name}}
-            </a>
-            <!--drink modal-->
-            <div class="modal fade" id="drinkModal{{forloop.counter}}" tabindex="-1" role="dialog"
-                 aria-labelledby="drinkModalTitle{{forloop.counter}}" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="drinkModalTitle{{forloop.counter}}">{{drink.name}}</h5>
-                        </div>
-
-                        <div class="modal-body">
-                            <h5>{{drink.instruction}}</h5>
-                            {% for ingredient in drink.ingredients.all %}
-                            <table>
-                                <tr>
-                                    <td>{{ingredient.name}}: <strong>{{ingredient.amount}}</strong></td>
-                                </tr>
-                            </table>
-                            {% endfor %}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Delete From Favorites</button>
-                            <form action="{% url 'vbk:modalSte' drink.id %}" method="post">
-                                {% csrf_token %}
-                                <select name="event_id">
-                                    {% for event in events %}
-                                    <option value="{{event.id}}">{{event.name}}</option>
-                                    {% endfor %}
-                                </select>
-                                <button type="submit" class="btn btn-primary">Add to Event</button>
-                            </form>
-                        </div>
-                    </div>
+            {% if has_favorites %}
+            <div class="dropdown">
+                <a class="btn btn-index btn-lg dropdown-toggle" role="button"
+                   id="dropdownMenuFav"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Favorites</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuFav">
+                    {% for drink in drinks %}
+                    <a class="dropdown-item" >{{drink.name}}</a>
+                    {% endfor %}
                 </div>
             </div>
-
-            {% endfor %}
-
-
-    {% endif %}
-    </div>
-
-<!--modals-->
-<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Register To Create Events!</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="{% url 'vbk:add_event' %}" method="POST">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" class="form-control" placeholder="Event Name" aria-label="Event"
-                               aria-describedby="basic-addon1" name="eventname">
-                        <label for="number">Number of Attendees</label>
-                        <input type="number" class="form-control" name="attendees"
-                               aria-describedby="emailHelp">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </form>
-            </div>
+            {% endif %}
 
         </div>
+        <div>
+            <a class="btn btn-index btn-lg" role="button" type="button" data-toggle="modal" data-target="#eventModal">Create Event</a>
+        </div>
+
+
+
     </div>
 </div>
-<!--end modal-->
+{% if has_favorites %}
+<div class="main-cont" id="favoritecard">
+    <div class="random-cont" id="randomcont">
+        {% for drink in drinks %}
+        <div class="card">
+            <a class="card_image" data-target="#drinkModal{{forloop.counter}}" data-toggle="modal">
+                <img src="{{drink.image}}" alt="">
+            </a>
+            <div class="card_title title-white">
+                <p>{{drink.name}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!--    </div>-->
 
 
-{% endblock %}
+    {% for drink in drinks %}
+    <!--drink modal-->
+    <div class="modal fade" id="drinkModal{{forloop.counter}}" tabindex="-1" role="dialog"
+         aria-labelledby="drinkModalTitle{{forloop.counter}}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="drinkModalTitle{{forloop.counter}}">{{drink.name}}</h5>
+                </div>
+
+                <div class="modal-body">
+                    <h5>{{drink.instruction}}</h5>
+                    {% for ingredient in drink.ingredients.all %}
+                    <table>
+                        <tr>
+                            <td>{{ingredient.name}}: <strong>{{ingredient.amount}}</strong></td>
+                        </tr>
+                    </table>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Delete From Favorites</button>
+                    <form action="{% url 'vbk:modalSte' drink.id %}" method="post">
+                        {% csrf_token %}
+                        <select name="event_id">
+                            {% for event in events %}
+                            <option value="{{event.id}}">{{event.name}}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-primary">Add to Event</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+    {% endif %}
+
+
+    <!--modals-->
+    <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Register To Create Events!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'vbk:add_event' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" placeholder="Event Name" aria-label="Event"
+                                   aria-describedby="basic-addon1" name="eventname">
+                            <label for="number">Number of Attendees</label>
+                            <input type="number" class="form-control" name="attendees"
+                                   aria-describedby="emailHelp">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--end modal-->
+
+
+    {% endblock %}

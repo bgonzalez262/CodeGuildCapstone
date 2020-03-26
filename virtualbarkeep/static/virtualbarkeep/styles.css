@@ -21,17 +21,33 @@ body {
     box-shadow:2px 2px 10px rgba(0,0,0,0.3);
 }
 /*navbar---*/
+
+/*test code*/
+
+/* Style the navbar */
+#navbar {
+    overflow: hidden;
+    background-color: #deff2b;
+    z-index: 2;
+}
+.content {
+  padding: 16px;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
 .logo-div {
-    text-align: center;
+    align-self: center;
 }
 .navbar {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: #deff2a!important;
     color: #00550b;
     margin-bottom: 30px;
-    height: 80px;
+    height: 60px;
 }
 .navbar li {
     display: inline;
@@ -89,6 +105,13 @@ body {
     border-radius: 25% 10px;
     width: 100% !important;
 }
+.jumbotron3 {
+    margin-top: 90px;
+    text-align: center;
+    background-color: rgba(0,0,0,0);
+    border-radius: 25% 10px;
+    width: 100% !important;
+}
 .search-header {
     display: flex;
     flex-direction: column;
@@ -127,8 +150,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-left: auto;
-    padding-right: auto;
+    /*padding-left: auto;*/
+    /*padding-right: auto;*/
 }
 
 .space {
@@ -187,11 +210,10 @@ body {
     height: 100%;
     flex-direction: row;
     flex-wrap: wrap;
-    /*align-items: center;*/
     justify-content: space-evenly;
 }
 .profile-main {
-    margin-top: 60px;
+    margin-top: 20px;
     height: 100%;
     width: 80vw;
 }
@@ -359,8 +381,12 @@ table tr td {
     justify-content: space-evenly;
 }
 .btn-index {
-    color: white;
-    background-color: #F95700FF;
+    color: black !important;
+    height: 50px!important;
+    width: 265px !important;
+    background-color: white;
+    margin: 8px;
+    border-radius: 0px 40px 0px 40px;
 }
 .btn-index:hover {
     color: red;
@@ -388,26 +414,26 @@ table tr td {
 
 
 /*scroll to top-------------*/
-#myBtn {
-  display: none; /* Hidden by default */
-  position: fixed; /* Fixed/sticky position */
-  bottom: 20px; /* Place the button at the bottom of the page */
-  right: 30px; /* Place the button 30px from the right */
-  z-index: 99; /* Make sure it does not overlap */
-  border: none; /* Remove borders */
-  outline: none; /* Remove outline */
-  background-color: red; /* Set a background color */
-  color: white; /* Text color */
-  cursor: pointer; /* Add a mouse pointer on hover */
-  padding: 15px; /* Some padding */
-  border-radius: 10px; /* Rounded corners */
-  font-size: 18px; /* Increase font size */
-}
+/*#myBtn {*/
+/*  display: none; !* Hidden by default *!*/
+/*  position: fixed; !* Fixed/sticky position *!*/
+/*  bottom: 20px; !* Place the button at the bottom of the page *!*/
+/*  right: 30px; !* Place the button 30px from the right *!*/
+/*  z-index: 99; !* Make sure it does not overlap *!*/
+/*  border: none; !* Remove borders *!*/
+/*  outline: none; !* Remove outline *!*/
+/*  background-color: red; !* Set a background color *!*/
+/*  color: white; !* Text color *!*/
+/*  cursor: pointer; !* Add a mouse pointer on hover *!*/
+/*  padding: 15px; !* Some padding *!*/
+/*  border-radius: 10px; !* Rounded corners *!*/
+/*  font-size: 18px; !* Increase font size *!*/
+/*}*/
 
-#myBtn a:hover {
-  background-color: white; /* Add a dark-grey background on hover */
-    color: red;
-}
+/*#myBtn a:hover {*/
+/*  background-color: white; !* Add a dark-grey background on hover *!*/
+/*    color: red;*/
+/*}*/
 
 /*sidebar nav*/
 /* The side navigation menu */
@@ -435,8 +461,8 @@ div.content {
     justify-content: space-between;
     width: 85vw;
     height: 100vh;
-    /*margin-top: 60px;*/
-    padding-top: 90px;
+    margin-top: 20px !important;
+    padding-top: 50px;
     flex-wrap: wrap;
 }
 .random-card {
@@ -445,53 +471,88 @@ div.content {
     margin: 20px;
 }
 .rand-name {
-
     opacity: 1 !important;
 }
 .main-cont {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
     width: 100vw;
-    height: 2000px;
-    background-color: rgba(0,85,11,.3);
+    height: 100vh;
+    margin-top: 60px;
+}
+.input-cust {
+    border-radius: 20px 10px 10px 0px;
+}
+.input-search {
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    background-color: white;
+}
+.cluster-cont {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80vw;
+    height: 100%;
+    margin-top: 0px;
 
-
+}
+.cluster-card {
+    display: flex;
+    margin:0px;
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
 }
 /*custom cards*/
 
 .card {
-  margin: 30px auto;
-  width: 300px;
-  height: 300px;
-  border-radius: 40px;
-box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
-  cursor: pointer;
-  transition: 0.4s;
+    margin: -2px;
+    width: 300px;
+    height: 300px;
+    /*border-radius: 10px;*/
+    /*box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);*/
+    cursor: pointer;
+    transition: 0.4s;
+    margin-left: -1px;
+    margin-right: -1px;
+    border: black 1px;
 }
 
 .card .card_image {
   width: inherit;
   height: inherit;
-  border-radius: 40px;
+
+
 }
 
 .card .card_image img {
   width: inherit;
   height: inherit;
-  border-radius: 40px;
+  /*border-radius: 10px;*/
   object-fit: cover;
 }
 
 .card .card_title {
   text-align: center;
-  border-radius: 0px 0px 40px 40px;
+  border-radius: 0px 0px 10px 10px;
   font-family: sans-serif;
   font-weight: bold;
   font-size: 30px;
   margin-top: -80px;
   height: 40px;
 }
+/*.card-img{*/
+/*    opacity: .3;*/
+/*}*/
 
 .card:hover {
   transform: scale(0.9, 0.9);
@@ -521,4 +582,22 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
     text-align: center;
     float: none;
   }
+}
+
+/*trying css*/
+.modal-mask {
+  /*position: fixed;*/
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: table;
+  transition: opacity .3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
 }
