@@ -2,68 +2,43 @@
 {% load static %}
 {% block content %}
 {% include './navbar.html %}
-<div class="space"></div>
+
+
+<div id="app">
+<div class="header-container">
 <div class="space-mobile"></div>
-<div class="events-cont" id="app">
-    <div class="card">
-        <h5 class="card-header">Event: {{event.name}}</h5>
-        <div class="card-body">
-            {% for drink in event.drinks.all %}
-            <h5 class="card-title">{{drink.name}}</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            {% endfor %}
-        </div>
+<div class="event-container">
+<div class="event-view">
+  <div class="event-data-side">
+    <div class="event-data-header">
+        <h5>[[event.name]]</h5>
     </div>
-
-<div class="accordion" id="accordionExample">
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h2 class="mb-0">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Collapsible Group Item #1
-        </button>
-      </h2>
-    </div>
-
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      <div class="event-btn-cont" v-for="drink in event.drinks">
+          <ul>
+              <li><a class="event-btn" @click="selectedDrink=drink">[[drink.name]]</a></li>
+          </ul>
       </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h2 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Collapsible Group Item #2
-        </button>
-      </h2>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      <div class="event-image" v-if="selectedDrink.ingredients.length > 0">
+          <img v-bind:src='selectedDrink.image' alt="Avatar" style="width:200px;height:200px;border-radius:10px 50px;margin: 20px">
       </div>
-    </div>
   </div>
-  <div class="card">
-    <div class="card-header" id="headingThree">
-      <h2 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Collapsible Group Item #3
-        </button>
-      </h2>
-    </div>
-    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+  <div class="event-data-main" v-if="selectedDrink.ingredients.length >0">
+      <div class="event-drink-inst">
+          <p>[[selectedDrink.instructions]]</p>
       </div>
-    </div>
+      <div class="event-drink-ingredients">
+          <ul>
+              <li v-for="ingredient in selectedDrink.ingredients">[[ingredient.name]] : [[ingredient.amount]]</li>
+          </ul>
+      </div>
   </div>
+</div>
+</div>
+</div>
 </div>
 
 
-</div>
-<script>
+<script type="text/javascript">
     let app = new Vue({
         el: '#app',
         delimiters: [
@@ -74,8 +49,12 @@
             event: {
                 name: '',
                 attendees: '0',
+                drinks: [],
             },
-            drinks: [],
+            selectedDrink:{
+                ingredients:[],
+                instruction:"",
+            },
 
         },
         created: function () {
@@ -86,9 +65,14 @@
             })
                 .then(response => {
                     console.log(response.data)
+                    this.event=response.data
                 })
         },
         methods: {
+            viewDrink: function (drink) {
+
+
+            }
 
         }
 

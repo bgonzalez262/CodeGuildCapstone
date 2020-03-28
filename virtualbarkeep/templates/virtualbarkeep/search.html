@@ -4,21 +4,24 @@
 
 
 {% include './navbar.html %}
-<div class="space"></div>
+
 <div id="app">
-    <div></div>
     <div class="header-container" id="#top">
         <div class="search-box">
             <div class="jumbotron jumbotron-fluid jumbotron3">
                 <h1 class="display-4">Drink Search</h1>
                 <p class="lead">Type the name of a drink to see results.</p>
-                <input type="text" class="form-control input-cust" v-model='drinkName' v-on:keyup.enter='startFind'>
-                <div class="input-search">
-                    <a href="#btn-bar" class="search-btn input-search" v-on:click="startFind">GO</a>
+                <div class="searchbar">
+                    <div>
+                        <input type="text" class="form-control input-cust" v-model='drinkName'
+                               v-on:keyup.enter='startFind'>
+                    </div>
+                    <div class="input-search">
+                        <a href="#btn-bar" v-on:click="startFind"><i class="fas fa-search fa-2x"></i></a>
+                    </div>
                 </div>
 
-
-
+                <!--                dropdown-->
 
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" aria-label="Text input with dropdown button">
@@ -30,15 +33,33 @@
                             <a class="dropdown-item" href="#">Drink Name</a>
                             <div role="separator" class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Ingredient</a>
-
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
+<!--        Pagination for drink names-->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">A-G</a></li>
+                <li class="page-item"><a class="page-link" href="#">H-N</a></li>
+                <li class="page-item"><a class="page-link" href="#">O-U</a></li>
+                <li class="page-item"><a class="page-link" href="#">V-Z</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
         <!--    cards-->
+        <div class="space-mobile"></div>
         <div class="drink-selector-btn">
             <div class="btn-variation">
                 <div id="btn-bar" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
@@ -160,6 +181,7 @@
             drinkResults2: [],
             selectedEvent: '',
             selectedDrink: null,
+            pagination:[],
 
         },
         methods: {
@@ -190,10 +212,6 @@
                     }
                 })
                     .then((response) => {
-                        // if (response.data.drink == null){
-                        //     alert('Try again')
-                        //     return
-                        // }
                         let drink_data = response.data.drinks
                         this.drinkResults = []
                         for (let i = 0; i < drink_data.length; ++i) {
@@ -226,9 +244,7 @@
                             image: drink_data2[i].strDrinkThumb,
                         })
                     }
-
                 })
-
             },
             addDrinkToFavorites: function (drink) {
                 console.log(drink)
@@ -239,10 +255,9 @@
                     headers: {
                         'X-CSRFToken': '{{csrf_token}}',
                     }
-
                 }).then(response => {
                     if (response.data == 'Already exists') {
-                        alert("You already favorited that drink.")
+                        alert("You already have this in your favorites!")
                     }
                     console.log(response)
                 })
@@ -263,13 +278,21 @@
                     console.log(response)
                 })
             },
-            savedAlert: function () {
-                alert("Added to Favorites")
+            listDrinks: function(){
+                axios({
+                    method: 'get',
+                    url: "{% url vbk:listdrinks %}"
+                }).then(response => {
+                    let drink_list = response.data.drinks
+                    for (let i = 0; i < drink_list.length; ++i){
+                        this.pagination.push({
+                            name: drink_list[i].name,
+                            drink_id: drink_list[i].drink_id,
+                            image: drink_list[i].image,
+                        })
+                    }
+                })
             },
-            eventSaved: function () {
-                alert("Saved to your event!")
-            },
-
         }
     });
 

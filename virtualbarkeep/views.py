@@ -2,7 +2,7 @@ from django.shortcuts import render, reverse
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .models import SavedDrink, SavedFood, Event, SavedDrinkIngredient
+from .models import SavedDrink, SavedFood, Event, SavedDrinkIngredient, DrinkList
 from django.contrib.auth.decorators import login_required
 import json
 
@@ -152,7 +152,7 @@ def event_view(request,event_id):
 def event_data(request, event_id):
     event = Event.objects.get(id=event_id)
     data = {
-        'event_name': event.name,
+        'name': event.name,
         'attendees': event.attendees,
         'drinks': [],
     }
@@ -173,6 +173,19 @@ def event_data(request, event_id):
             'ingredients': ingredients,
             })
     return JsonResponse(data)
+
+def search_list_drinks(request):
+    list = DrinkList.objects.all()
+    data = {
+        'drinks':[]
+        }
+    for drink in list:
+        data['drinks'].append({
+            'name':drink.name,
+            'drink_id':drink.drink_id
+        })
+    return JsonResponse(data)
+
 
 
 

@@ -20,7 +20,7 @@
             </div>
         </div>
     </div>
-    <div class="cluster-cont" v-if="randomDrinks.length > 0">
+    <div class="cluster-cont " v-if="randomDrinks.length > 0">
         <div v-for="drink in randomDrinks" class="card">
             <a class="card_image" @click="showModal = true">
                 <img v-bind:src="[[drink.image]]" alt="">

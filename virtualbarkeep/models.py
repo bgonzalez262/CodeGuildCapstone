@@ -40,6 +40,20 @@ class SavedFood(models.Model):
     def __str__(self):
         return self.user.username + ' ' + self.name
 
+class Ingredient(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class DrinkList(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.CharField(max_length=200)
+    drink_id = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name + ':' + self.drink_id
+
 
 
 
