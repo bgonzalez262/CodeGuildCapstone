@@ -38,132 +38,118 @@
                 </div>
             </div>
         </div>
-<!--        Pagination for drink names-->
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">A-G</a></li>
-                <li class="page-item"><a class="page-link" href="#">H-N</a></li>
-                <li class="page-item"><a class="page-link" href="#">O-U</a></li>
-                <li class="page-item"><a class="page-link" href="#">V-Z</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
 
-        <!--    cards-->
-        <div class="space-mobile"></div>
-        <div class="drink-selector-btn">
-            <div class="btn-variation">
-                <div id="btn-bar" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                    <div role="group" aria-label="First group">
-                        <a href="#cardid" v-for="drink in drinkResults" v-on:click="advancedFind(drink.name)"
-                           type="button" class="btn btn-secondary drink-button">[[drink.name]]
+
+
+
+
+
+    <!--    cards-->
+    <div class="space-mobile"></div>
+    <div class="drink-selector-btn">
+        <div class="btn-variation">
+            <div id="btn-bar" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                <div role="group" aria-label="First group">
+                    <a href="#cardid" v-for="drink in drinkResults" v-on:click="advancedFind(drink.name)"
+                       type="button" class="btn btn-secondary drink-button">[[drink.name]]
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-cont" id="cardid">
+    <div class="card-contains">
+        <div class="flip-contain">
+            <div class="flip-card" v-for='drink in drinkResults2' id="flipcard">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div>
+                            <img v-bind:src='drink.image' alt="Avatar"
+                                 style="width:200px;height:200px;border-radius:10px 50px;margin: 20px">
+                        </div>
+                        <div>
+                            <h1>[[drink.name]]</h1>
+                            <hr>
+                            <table>
+                                <tr>
+                                    <th>Ingredient</th>
+                                    <th>Measurement</th>
+                                </tr>
+                                <tr v-for='ingredient in drink.ingredients'>
+                                    <td>[[ingredient.name]]</td>
+                                    <td>[[ingredient.amount]]</td>
+                                </tr>
+                            </table>
+                            <div id="cardid"></div>
+                        </div>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="card-back-head">
+                            <h2>Instructions</h2>
+                            <p>[[drink.instructions]]</p>
+                            <hr>
+                        </div>
+                        <div class="card-save">
+                            <a data-target="#addModalevent"><img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Ic_event_available_48px.svg/1024px-Ic_event_available_48px.svg.png"
+                                    alt="" height="100px" width="100px" role="button" type="button"
+                                    data-toggle="modal" data-target="#addModalevent" @click="selectedDrink = drink"></a>
+                            <a class="btn btn-index btn-md" data-toggle="modal" data-target="#addModalevent"
+                               role="button" @click="selectedDrink = drink">Add To Event</a>
+                            <a @click="addDrinkToFavorites(drink)"><img
+                                    src="https://cdn.onlinewebfonts.com/svg/img_359120.png" href="#searchid"
+                                    @click="savedAlert()" role="button" height="100px" width="100px"></a>
+                            <a class="btn btn-index btn-md" href="#searchid"
+                               @click="addDrinkToFavorites(drink)" role="button">Add
+                                to Favorites</a>
+                            <a href="#top" title="Go to top">Top</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--    modal-->
+<div class="modal fade" id="addModalevent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add to Event</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="event">Select Event</label>
+                    <div class="dropdown" name="event">
+                        <a class="btn btn-index btn-lg dropdown-toggle" role="button" id="dropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Events
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            {% for event in events %}
+                            <a class="dropdown-item" @click="selectedEvent='{{event.id}}'">{{event.name}}</a>
+
+                            {% endfor %}
+                        </div>
+
+                        <a class="btn btn-index btn-lg" @click="addDrinkToEvent" role="button" type="button"
+                           data-toggle="modal" data-target="#eventModal">Add To Event
                         </a>
                     </div>
                 </div>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
+
         </div>
     </div>
-    <div class="main-cont" id="cardid">
-        <div class="card-contains">
-            <div class="flip-contain">
-                <div class="flip-card" v-for='drink in drinkResults2' id="flipcard">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <div>
-                                <img v-bind:src='drink.image' alt="Avatar"
-                                     style="width:200px;height:200px;border-radius:10px 50px;margin: 20px">
-                            </div>
-                            <div>
-                                <h1>[[drink.name]]</h1>
-                                <hr>
-                                <table>
-                                    <tr>
-                                        <th>Ingredient</th>
-                                        <th>Measurement</th>
-                                    </tr>
-                                    <tr v-for='ingredient in drink.ingredients'>
-                                        <td>[[ingredient.name]]</td>
-                                        <td>[[ingredient.amount]]</td>
-                                    </tr>
-                                </table>
-                                <div id="cardid"></div>
-                            </div>
-                        </div>
-                        <div class="flip-card-back">
-                            <div class="card-back-head">
-                                <h2>Instructions</h2>
-                                <p>[[drink.instructions]]</p>
-                                <hr>
-                            </div>
-                            <div class="card-save">
-                                <a data-target="#addModalevent"><img
-                                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Ic_event_available_48px.svg/1024px-Ic_event_available_48px.svg.png"
-                                        alt="" height="100px" width="100px" role="button" type="button"
-                                        data-toggle="modal" data-target="#addModalevent" @click="selectedDrink = drink"></a>
-                                <a class="btn btn-index btn-md" data-toggle="modal" data-target="#addModalevent"
-                                   role="button">Add To Event</a>
-                                <a @click="addDrinkToFavorites(drink)"><img
-                                        src="https://cdn.onlinewebfonts.com/svg/img_359120.png" href="#searchid"
-                                        @click="savedAlert()" role="button" height="100px" width="100px"></a>
-                                <a class="btn btn-index btn-md" href="#searchid"
-                                   @click="savedAlert(); addDrinkToFavorites(drink)" role="button">Add
-                                    to Favorites</a>
-                                <a href="#top" title="Go to top">Top</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!--    modal-->
-    <div class="modal fade" id="addModalevent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add to Event</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="event">Select Event</label>
-                        <div class="dropdown" name="event">
-                            <a class="btn btn-index btn-lg dropdown-toggle" role="button" id="dropdownMenuLink"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Events
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                {% for event in events %}
-                                <a class="dropdown-item" @click="selectedEvent='{{event.id}}'">{{event.name}}</a>
-
-                                {% endfor %}
-                            </div>
-
-                            <a class="btn btn-index btn-lg" @click="addDrinkToEvent" role="button" type="button"
-                               data-toggle="modal" data-target="#eventModal">Add To Event
-                            </a>
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
+</div>
 </div>
 
 
@@ -181,7 +167,10 @@
             drinkResults2: [],
             selectedEvent: '',
             selectedDrink: null,
-            pagination:[],
+            pagAg: [],
+            pagHn: [],
+            pagOu: [],
+            pagVz: [],
 
         },
         methods: {
@@ -278,23 +267,36 @@
                     console.log(response)
                 })
             },
-            listDrinks: function(){
-                axios({
-                    method: 'get',
-                    url: "{% url vbk:listdrinks %}"
-                }).then(response => {
-                    let drink_list = response.data.drinks
-                    for (let i = 0; i < drink_list.length; ++i){
-                        this.pagination.push({
-                            name: drink_list[i].name,
-                            drink_id: drink_list[i].drink_id,
-                            image: drink_list[i].image,
-                        })
-                    }
-                })
-            },
+            // listDrinks: function () {
+            //     axios({
+            //         method: 'get',
+            //         url: "{% url 'vbk:listdrinks' %}"
+            //     }).then(response => {
+            //         let drink_list = response.data.drinks
+            //         for (let i = 0; i < drink_list.length; ++i) {
+            //             if (drink_list[i].toLowerCase().startsWith("a")) {
+            //                 this.pagAg.push({
+            //                     name: drink_list[i].name,
+            //                     drink_id: drink_list[i].drink_id,
+            //                     image: drink_list[i].image,
+            //                 })
+            //             }
+            //         }
+            //         for (let i = 0; i < drink_list.length; ++i) {
+            //             if (drink_list[i].toLowerCase().startsWith("b")) {
+            //                 this.pagAg.push({
+            //                     name: drink_list[i].name,
+            //                     drink_id: drink_list[i].drink_id,
+            //                     image: drink_list[i].image,
+            //                 })
+            //             }
+            //         }
+            //     })
+            // }
         }
-    });
+    })
+
+
 
     // end vue
     function showCard() {
