@@ -322,6 +322,9 @@ table tr td {
 .card-save {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
 }
 
 /*login page styles ------------------------*/
@@ -460,7 +463,7 @@ table tr td {
 .btn-index {
     color: black !important;
     height: 50px!important;
-    width: 265px !important;
+    width: 255px !important;
     background-color: white;
     margin: 8px;
     border-radius: 0px 40px 0px 40px;

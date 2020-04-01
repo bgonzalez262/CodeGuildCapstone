@@ -91,18 +91,10 @@
                             <hr>
                         </div>
                         <div class="card-save">
-                            <a data-target="#addModalevent"><img
-                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Ic_event_available_48px.svg/1024px-Ic_event_available_48px.svg.png"
-                                    alt="" height="100px" width="100px" role="button" type="button"
-                                    data-toggle="modal" data-target="#addModalevent" @click="selectedDrink = drink"></a>
-                            <a class="btn btn-index btn-md" data-toggle="modal" data-target="#addModalevent"
-                               role="button" @click="selectedDrink = drink">Add To Event</a>
-                            <a @click="addDrinkToFavorites(drink)"><img
-                                    src="https://cdn.onlinewebfonts.com/svg/img_359120.png" href="#searchid"
-                                    @click="savedAlert()" role="button" height="100px" width="100px"></a>
+                            <a class="btn btn-index" data-toggle="modal" data-target="#addModalevent"
+                               role="button" @click="selectedDrink = drink"><i class="fas fa-calendar-alt fa-2x"></i></a>
                             <a class="btn btn-index btn-md" href="#searchid"
-                               @click="addDrinkToFavorites(drink)" role="button">Add
-                                to Favorites</a>
+                               @click="addDrinkToFavorites(drink)" role="button"><i class="fas fa-heart fa-2x"></i></a>
                             <a href="#top" title="Go to top">Top</a>
                         </div>
                     </div>
