@@ -20,22 +20,6 @@
                         <a href="#btn-bar" v-on:click="startFind"><i class="fas fa-search fa-2x"></i></a>
                     </div>
                 </div>
-
-                <!--                dropdown-->
-
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" aria-label="Text input with dropdown button">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">Search Type
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Drink Name</a>
-                            <div role="separator" class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Ingredient</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -51,14 +35,16 @@
             <div id="btn-bar" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 <div role="group" aria-label="First group">
                     <a href="#cardid" v-for="drink in drinkResults" v-on:click="advancedFind(drink.name)"
-                       type="button" class="btn btn-secondary drink-button">[[drink.name]]
+                       type="button" class="btn btn-index btn-lg"><i class="fas fa-chevron-circle-right"></i>  [[drink.name]]
                     </a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!--    Flip cards-->
 <div class="main-cont" id="cardid">
+    <div class="space-mobile"></div>
     <div class="card-contains">
         <div class="flip-contain">
             <div class="flip-card" v-for='drink in drinkResults2' id="flipcard">
@@ -159,11 +145,6 @@
             drinkResults2: [],
             selectedEvent: '',
             selectedDrink: null,
-            pagAg: [],
-            pagHn: [],
-            pagOu: [],
-            pagVz: [],
-
         },
         methods: {
             mergeIngredients: function (drink) {
@@ -194,6 +175,7 @@
                 })
                     .then((response) => {
                         let drink_data = response.data.drinks
+                        console.log(drink_data)
                         this.drinkResults = []
                         for (let i = 0; i < drink_data.length; ++i) {
                             this.drinkResults.push({
@@ -215,6 +197,9 @@
                     }
                 }).then((response) => {
                     console.log(response.data.drinks)
+                    if (response.data.drinks == null){
+                        return alert("Bad")
+                    }
                     let drink_data2 = response.data.drinks
                     this.drinkResults2 = []
                     for (let i = 0; i < drink_data2.length; ++i) {
@@ -259,42 +244,13 @@
                     console.log(response)
                 })
             },
-            // listDrinks: function () {
-            //     axios({
-            //         method: 'get',
-            //         url: "{% url 'vbk:listdrinks' %}"
-            //     }).then(response => {
-            //         let drink_list = response.data.drinks
-            //         for (let i = 0; i < drink_list.length; ++i) {
-            //             if (drink_list[i].toLowerCase().startsWith("a")) {
-            //                 this.pagAg.push({
-            //                     name: drink_list[i].name,
-            //                     drink_id: drink_list[i].drink_id,
-            //                     image: drink_list[i].image,
-            //                 })
-            //             }
-            //         }
-            //         for (let i = 0; i < drink_list.length; ++i) {
-            //             if (drink_list[i].toLowerCase().startsWith("b")) {
-            //                 this.pagAg.push({
-            //                     name: drink_list[i].name,
-            //                     drink_id: drink_list[i].drink_id,
-            //                     image: drink_list[i].image,
-            //                 })
-            //             }
-            //         }
-            //     })
-            // }
         }
     })
-
-
-
     // end vue
     function showCard() {
         document.getElementById('cardHide').setAttribute("class", "card1");
     }
+    </script>
 
 
-</script>
 {% endblock %}
