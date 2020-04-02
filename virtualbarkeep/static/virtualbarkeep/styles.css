@@ -73,7 +73,7 @@ body {
     margin-top: 30px;
 }
 .header-container {
-    margin-top: 160px;
+    margin-top: 60px;
     padding-top: 5px;
     display: flex;
     flex-direction: column;
@@ -81,10 +81,10 @@ body {
     color: black;
     height: 100vh;
     width: 100vw;
-    justify-content: start;
+    justify-content: center;
 
 }
-.jumbotron {
+.jumtnotron {
     padding: 2px 32px !important;
 }
 .jumbotron2 {
@@ -140,6 +140,8 @@ body {
     justify-content: center;
     padding-left: auto;
     padding-right: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .space {
@@ -448,11 +450,12 @@ table tr td {
 }
 .btn-variation {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     margin-left: auto;
     margin-right: auto;
-    justify-content: space-between;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 .btn-index {
     color: black !important;

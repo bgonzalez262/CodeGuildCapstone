@@ -33,7 +33,7 @@
     <div class="drink-selector-btn">
         <div class="btn-variation">
             <div id="btn-bar" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                <div role="group" aria-label="First group">
+                <div class="btn-variation" role="group" aria-label="First group">
                     <a href="#cardid" v-for="drink in drinkResults" v-on:click="advancedFind(drink.name)"
                        type="button" class="btn btn-index btn-lg"><i class="fas fa-chevron-circle-right"></i>  [[drink.name]]
                     </a>
@@ -197,8 +197,8 @@
                     }
                 }).then((response) => {
                     console.log(response.data.drinks)
-                    if (response.data.drinks == null){
-                        return alert("Bad")
+                    if (response.data.drinks == 'null'){
+                        alert("Bad")
                     }
                     let drink_data2 = response.data.drinks
                     this.drinkResults2 = []
