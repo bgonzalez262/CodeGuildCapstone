@@ -253,6 +253,17 @@ body {
     background-color: black !important;
     color: white !important;
     font-family: 'Offside' !important;
+    height: 50px!important;
+    width: 100% !important;
+}
+.card_title{
+    display: flex;
+    justify-content: center;
+    text-align: center !important;
+    align-items: center;
+    height: 100px!important;
+    width: 300px !important;
+    border-radius: 0px !important;
 }
 .card1 {
     display: block;

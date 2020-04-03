@@ -11,13 +11,16 @@ import json
 def index(request):
     return render(request, 'virtualbarkeep/index.html')
 
-@login_required
+
 def searchalc(request):
-    events = Event.objects.all().filter(user=request.user)
-    context = {
-        'events':events,
-    }
-    return render(request, 'virtualbarkeep/search.html', context)
+    if request.user.is_authenticated:
+        events = Event.objects.all().filter(user=request.user)
+        context = {
+            'events':events,
+        }
+        return render(request, 'virtualbarkeep/search.html', context)
+    else:
+        return render(request, 'virtualbarkeep/search.html')
 
 
 
@@ -191,6 +194,13 @@ def search_list_drinks(request):
 
 def random_drink_view(request):
     pass
+
+def delete_drink(request, drink_id):
+    favorite_drink = SavedDrink.objects.get(id=drink_id)
+    favorite_drink.delete()
+    return render(request, 'virtualbarkeep/index.html')
+
+
 
 
 

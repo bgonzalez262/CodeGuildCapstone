@@ -18,25 +18,15 @@
                 {% endfor %}
             </div>
             {% if has_favorites %}
-            <div class="dropdown">
-                <a class="btn btn-index btn-lg dropdown-toggle" role="button"
-                   id="dropdownMenuFav"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Favorites</a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuFav">
-                    {% for drink in drinks %}
-                    <a class="dropdown-item" >{{drink.name}}</a>
-                    {% endfor %}
-                </div>
+            <div>
+                <a class="btn btn-index btn-lg" href="#favoritecard" role="button">Favorites</a>
             </div>
             {% endif %}
-
         </div>
         <div>
             <a class="btn btn-index btn-lg" role="button" type="button" data-toggle="modal" data-target="#eventModal">Create Event</a>
         </div>
-
-
-
+            <a class="btn btn-index btn-lg" href="{% url 'vbk:searchalc' %}" role="button">Search for drinks</a>
     </div>
 </div>
 {% if has_favorites %}
@@ -54,8 +44,6 @@
         {% endfor %}
     </div>
     <!--    </div>-->
-
-
     {% for drink in drinks %}
     <!--drink modal-->
     <div class="modal fade" id="drinkModal{{forloop.counter}}" tabindex="-1" role="dialog"
@@ -79,11 +67,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Delete From Favorites</button>
+                    <a type="button" class="btn btn-primary" href="{% url 'vbk:delete' drink.id %}">Delete From Favorites</a>
                     <form action="{% url 'vbk:modalSte' drink.id %}" method="post">
                         {% csrf_token %}
                         <select name="event_id">
+                            <option>Choose Event</option>
                             {% for event in events %}
+
                             <option value="{{event.id}}">{{event.name}}</option>
                             {% endfor %}
                         </select>
@@ -93,11 +83,8 @@
             </div>
         </div>
     </div>
-
     {% endfor %}
     {% endif %}
-
-
     <!--modals-->
     <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -124,7 +111,6 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>

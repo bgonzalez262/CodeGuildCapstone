@@ -2,26 +2,17 @@
 Final project
 # Capstone Proposal for Brandon Gonzalez
 
-## Names:
-    - Site Name: Illumine 
-        - App Names:
-            - Virtual Barkeep
-                - Plan a drink menu using the liqour you have or liqour you want
-            - Virtual Sous Chef
-                - Plan a menu using variations of diet
+## Names: Virtual Barkeep
+   diet
             
-### **The SDLC**
- requirements/what is the problem?
- design/planning/solution
- implementation/coding
- deployment
- maintenance
 
 1. Project overview:
-    - Problem
-        - What is the hardest thing to do when planning a party or a get together? Picking out drinks and food that people will talk about then and after. Illumine will provide the user with the tools to "branch" out with their ideas, pair food and drink that they otherwise wouldn't have. It will allow the user to explore variations using ingredients that they know, but haven't fully capitalized on. 
-    - Possible libraries and frameworks:
-        - HTML5, CSS3, JS, VueJS, Bootstrap, Foundation
+    - Purpose: Provide the user with the ability to broaden their mixologist skill set, or to create a unique menu for unique event.
+    - Front End:
+        HTML5, CSS3, JS, VueJS, Bootstrap4
+    - Back End:
+        Python, Django, SQLlite3
+         
 
 2. Requirements
     - This virtual meal/drink planner will provide the end user with a custom list of meal and drink recipes. This benefits of a program like that will directly coincide with the requirements needed to consistently provide customers, friends and families with a diversified menu.

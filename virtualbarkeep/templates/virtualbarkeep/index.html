@@ -11,23 +11,47 @@
             <div class="jumbotron jumbotron2">
                 <img src="{% static 'virtualbarkeep/images/logotry1.jpg' %}" height="200px" width="200px" alt="">
                 <h1 class="display-4" style="color: white"> Hello,</h1>
-                <h3 class="lead" style="color:white"><strong>welcome to your very own virtual drink assistant..</strong></h3>
+                <h3 class="lead" style="color:white"><strong>welcome to your very own virtual drink assistant..</strong>
+                </h3>
                 <hr class="my-4">
                 <p>take your taste buds on a journey</p>
                 <a class="btn btn-index btn-lg" href="{% url 'vbk:searchalc' %}" role="button">SEARCH FOR DRINKS</a>
-                <a class="btn btn-index btn-lg" @click="randomFind" href="#smoothscroll" role="button">SHOW ME RANDOM</a>
+                <a class="btn btn-index btn-lg" @click="randomFind" href="#smoothscroll" role="button">SHOW ME
+                    RANDOM</a>
             </div>
         </div>
     </div>
     <div class="space" id="smoothscroll"></div>
     <div class="space"></div>
     <div class="cluster-cont " v-if="randomDrinks.length > 0">
-        <div v-for="drink in randomDrinks" class="card">
-            <a class="card_image" data-target="#drinkModal{{forloop.counter}}" data-toggle="modal">
+        <div v-for="drink in randomDrinks" @click="selectedDrink=drink" class="card">
+            <a class="card_image" data-target="#drinkModal" data-toggle="modal">
                 <img v-bind:src="[[drink.image]]" alt="">
             </a>
             <div class="card_title title-white">
                 <p>[[drink.name]]</p>
+            </div>
+        </div>
+    </div>
+
+    <!--    modal-->
+    <div v-if="selectedDrink != null" class="modal fade" id="drinkModal" tabindex="-1" role="dialog"
+         aria-labelledby="drinkModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="drinkModalTitle">[[selectedDrink.name]]</h5>
+                </div>
+
+                <div class="modal-body">
+                    <h5>[[selectedDrink.instructions]]</h5>
+                    <table v-for="ingredient in selectedDrink.ingredients">
+                        <tr>
+                            <td>[[ingredient.name]]: <strong>[[ingredient.amount]]</strong></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -44,10 +68,29 @@
         ],
         data: {
             randomDrinks: [],
+            selectedDrink: null,
             showModal: false,
 
         },
         methods: {
+            mergeIngredients: function (drink) {
+                let ingredients = []
+                for (let i = 1; i <= 15; ++i) {
+                    let name = drink['strIngredient' + i]
+                    let amount = drink['strMeasure' + i]
+                    if (name == null) {
+                        break
+                    }
+                    if (amount == null) {
+                        amount = ''
+                    }
+                    ingredients.push({
+                        name: name,
+                        amount: amount
+                    })
+                }
+                return ingredients
+            },
             randomFind: function () {
                 axios({
                     method: 'get',
@@ -63,31 +106,12 @@
                             this.randomDrinks.push({
                                 name: drinks_data[i].strDrink,
                                 image: drinks_data[i].strDrinkThumb,
+                                instructions: drinks_data[i].strInstructions,
+                                ingredients: this.mergeIngredients(drinks_data[i]),
                             })
                         }
                         console.log(this.randomDrinks)
                     })
-            },
-            advancedFind: function (nameChoice) {
-                axios({
-                    method: 'get',
-                    url: 'https://www.thecocktaildb.com/api/json/v1/1/search.php',
-                    params: {
-                        s: nameChoice,
-                    }
-                }).then((response) => {
-                    console.log(response.data.drinks)
-                    let drink_data2 = response.data.drinks
-                    this.drinkResults2 = []
-                    for (let i = 0; i < drink_data2.length; ++i) {
-                        this.drinkResults2.push({
-                            name: drink_data2[i].strDrink,
-                            instructions: drink_data2[i].strInstructions,
-                            ingredients: this.mergeIngredients(drink_data2[i]),
-                            image: drink_data2[i].strDrinkThumb,
-                        })
-                    }
-                })
             },
         },
     })

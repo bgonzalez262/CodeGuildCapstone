@@ -24,7 +24,7 @@ class SavedDrink(models.Model):
         return self.user.username + ' ' + self.name
 
 class SavedDrinkIngredient(models.Model):
-    drink = models.ForeignKey(SavedDrink, on_delete=models.PROTECT, related_name='ingredients')
+    drink = models.ForeignKey(SavedDrink, on_delete=models.CASCADE, related_name='ingredients')
     name = models.CharField(max_length=100)
     amount = models.CharField(max_length=100)
 
