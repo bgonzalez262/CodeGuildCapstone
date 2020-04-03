@@ -109,8 +109,6 @@ def modalSte(request,drink_id):
     print(drink)
     return HttpResponseRedirect(reverse('vbk:profile'))
 
-
-# save drink to favorites. Shown on the profile page.
 @login_required
 def stf(request):
     data = json.loads(request.body)
@@ -130,7 +128,7 @@ def stf(request):
     print(data)
     return HttpResponseRedirect(reverse('vbk:profile'))
 
-# Log in required. Displays selectable event for viewing and favorite drinks---
+
 @login_required
 def profile(request):
     events = Event.objects.all().filter(user=request.user)
@@ -145,7 +143,6 @@ def profile(request):
     }
     return render(request, 'virtualbarkeep/profile.html', context)
 
-# Single event view pages with all even data, including drinks and attendees.
 @login_required
 def event_view(request,event_id):
     event = Event.objects.get(id=event_id)
@@ -162,7 +159,6 @@ def event_data(request, event_id):
         'attendees': event.attendees,
         'drinks': [],
     }
-
     for drink in event.drinks.all():
         ingredients = []
         for ingredient in drink.ingredients.all():
